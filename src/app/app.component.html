@@ -4,11 +4,14 @@
     Welcome to {{ title }}!
   </h1>
  
+ <button (click)="getSelectedRows()">Get Selected Rows</button>
   <ag-grid-angular 
-  style="width: 500px; height: 500px;" 
+  #agGrid
+  style="width: auto; height: 500px;" 
   class="ag-theme-balham"
   [rowData]="rowData | async" 
   [columnDefs]="columnDefs"
+  rowSelection="multiple"
   >
 </ag-grid-angular>
 
