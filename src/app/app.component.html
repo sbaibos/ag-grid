@@ -8,6 +8,7 @@
   <ag-grid-angular 
   #agGrid
   style="width: auto; height: 500px;" 
+  [autoGroupColumnDef]="autoGroupColumnDef"
   class="ag-theme-balham"
   [rowData]="rowData | async" 
   [columnDefs]="columnDefs"

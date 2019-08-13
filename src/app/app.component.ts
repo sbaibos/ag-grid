@@ -10,6 +10,15 @@ import { AgGridAngular } from 'ag-grid-angular';
 export class AppComponent {
 	@ViewChild('agGrid') agGrid: AgGridAngular;
   title = 'angularGrid';
+  
+  autoGroupColumnDef = {
+        headerName: 'Model',
+        field: 'model',
+        cellRenderer: 'agGroupCellRenderer',
+        cellRendererParams: {
+            checkbox: true
+        }
+    };
 
   columnDefs = [
     {headerName: 'Make', field: 'make', sortable: true, filter: true, checkboxSelection: true },
@@ -25,7 +34,7 @@ constructor(private http: HttpClient) {
 }
 
 ngOnInit() {
-    this.rowData = this.http.get('https://api.myjson.com/bins/15psn9');
+    this.rowData = this.http.get('https://api.myjson.com/bins/ly7d1');
 }
 
 getSelectedRows() {
