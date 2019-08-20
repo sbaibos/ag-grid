@@ -34,8 +34,8 @@ constructor(private http: HttpClient) {
 }
 
 ngOnInit() {
-    //this.rowData = this.http.get('https://api.myjson.com/bins/15psn9');
-    this.rowData = this.http.get('http://localhost/websites/grid_api/objects/readMytable.php');
+    this.rowData = this.http.get('https://api.myjson.com/bins/15psn9');
+    //this.rowData = this.http.get('http://localhost/websites/grid_api/objects/readMytable.php');
 }
 
 getSelectedRows() {
