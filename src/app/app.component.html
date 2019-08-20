@@ -7,12 +7,14 @@
  <button (click)="getSelectedRows()">Get Selected Rows</button>
   <ag-grid-angular 
   #agGrid
-  style="width: auto; height: 500px;" 
+  style="width: auto; height: 500px;"   
+  [pagination]="true"
   [autoGroupColumnDef]="autoGroupColumnDef"
   class="ag-theme-balham"
   [rowData]="rowData | async" 
   [columnDefs]="columnDefs"
   rowSelection="multiple"
+  [enableCharts]="true"
   >
 </ag-grid-angular>
 

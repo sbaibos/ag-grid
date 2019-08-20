@@ -23,7 +23,7 @@ export class AppComponent {
   columnDefs = [
     {headerName: 'Make', field: 'make', sortable: true, filter: true, checkboxSelection: true },
     {headerName: 'Model', field: 'model', sortable: true, filter: true },
-    {headerName: 'Price', field: 'price', sortable: true, filter: true}
+    {headerName: 'Price', field: 'price', sortable: true, filter: true, editable: true}
 ];
 
 rowData : any;
@@ -34,7 +34,8 @@ constructor(private http: HttpClient) {
 }
 
 ngOnInit() {
-    this.rowData = this.http.get('https://api.myjson.com/bins/ly7d1');
+    //this.rowData = this.http.get('https://api.myjson.com/bins/15psn9');
+    this.rowData = this.http.get('http://localhost/websites/grid_api/objects/readMytable.php');
 }
 
 getSelectedRows() {
@@ -43,5 +44,6 @@ getSelectedRows() {
         const selectedDataStringPresentation = selectedData.map( node => node.make + ' ' + node.model).join(', ');
         alert(`Selected nodes: ${selectedDataStringPresentation}`);
     }
-
+	
+	
 }
