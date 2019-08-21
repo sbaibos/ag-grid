@@ -11,10 +11,13 @@
   [pagination]="true"
   [autoGroupColumnDef]="autoGroupColumnDef"
   class="ag-theme-balham"
-  [rowData]="rowData | async" 
+  [rowData]="rowData" 
   [columnDefs]="columnDefs"
   rowSelection="multiple"
-  [enableCharts]="true"
+  [enableCharts]="true"  
+   [masterDetail]="true"
+   [detailCellRendererParams]="detailCellRendererParams"
+   (gridReady)="onGridReady($event)"
   >
 </ag-grid-angular>
 
