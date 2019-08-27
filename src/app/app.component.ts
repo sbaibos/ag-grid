@@ -37,32 +37,23 @@ constructor(private http: HttpClient) {
       {
         field: "name",
         cellRenderer: "agGroupCellRenderer"
-      },
-      { field: "account" },
-      { field: "calls" },
-      {
-        field: "minutes",
-        valueFormatter: "x.toLocaleString() + 'm'"
       }
+      
     ];
     this.detailCellRendererParams = {
       detailGridOptions: {
         columnDefs: [
-          { field: "callId" },
-          { field: "direction" },
-          { field: "number" },
-          {
-            field: "duration",
-            valueFormatter: "x.toLocaleString() + 's'"
-          },
-          { field: "switchCode" }
+         
+		 {  field: "high" },
+		 { field: "low" },
+      { field: "close" }
         ],
         onFirstDataRendered(params) {
           params.api.sizeColumnsToFit();
         }
       },
       getDetailRowData: function(params) {
-        params.successCallback(params.data.callRecords);
+        params.successCallback(params.data[0]);
       }
     };
 	
@@ -87,7 +78,8 @@ ngOnInit() {
 
     this.http
       .get(
-        "https://raw.githubusercontent.com/ag-grid/ag-grid-docs/latest/src/javascript-grid-master-detail/simple/data/data.json"
+        //"https://raw.githubusercontent.com/ag-grid/ag-grid-docs/latest/src/javascript-grid-master-detail/simple/data/data.json"
+		"http://localhost/websites/grid_api/objects/readStock.php"
       )
       .subscribe(data => {
         this.rowData = data;
