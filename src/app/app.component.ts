@@ -11,19 +11,29 @@ export class AppComponent {
 	@ViewChild('agGrid') agGrid: AgGridAngular;
   title = 'angularGrid';
   
-  autoGroupColumnDef = {
-        headerName: 'Model',
-        field: 'model',
-        cellRenderer: 'agGroupCellRenderer',
-        cellRendererParams: {
-            checkbox: true
-        }
-    };
+  // autoGroupColumnDef = {
+        // headerName: 'Name',
+        // field: 'name',
+        // cellRenderer: 'agGroupCellRenderer',
+        // cellRendererParams: {
+            // checkbox: true
+        // }
+    // };
 
   columnDefs = [
-    {headerName: 'Make', field: 'make', sortable: true, filter: true, checkboxSelection: true,rowGroup: true },
-    {headerName: 'Model', field: 'model', sortable: true, filter: true },
-    {headerName: 'Price', field: 'price', sortable: true, filter: true, editable: true}
+    {headerName: 'Name', field: 'name', sortable: true, filter: true, checkboxSelection: true,rowGroup: true },
+    {headerName: 'Date', field: 'date', sortable: true, filter: true, editable: true},
+	{headerName: 'Open', field: 'open', sortable: true, filter: true, editable: true},
+	{headerName: 'High', field: 'high', sortable: true, filter: true, editable: true},
+	{headerName: 'Low', field: 'low', sortable: true, filter: true, editable: true},
+	{headerName: 'Close', field: 'close', sortable: true, filter: true, editable: true},
+	{headerName: 'Volume', field: 'volume', sortable: true, filter: true, editable: true},
+	{headerName: 'Adjusted Volume', field: 'adj_volume', sortable: true, filter: true, editable: true},
+	{headerName: 'Adjusted High', field: 'adj_high', sortable: true, filter: true, editable: true},
+	{headerName: 'Adjusted low', field: 'adj_low', sortable: true, filter: true, editable: true}
+	
+	
+	
 ];
 
 rowData : any;
@@ -35,8 +45,8 @@ constructor(private http: HttpClient) {
 
 ngOnInit() {
     //this.rowData = this.http.get('https://api.myjson.com/bins/15psn9');
-    //this.rowData = this.http.get('http://localhost/websites/grid_api/objects/readMytable.php');
-	 this.rowData = this.http.get('https://api.myjson.com/bins/ly7d1');
+    this.rowData = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
+	// this.rowData = this.http.get('https://api.myjson.com/bins/ly7d1');
 }
 
 getSelectedRows() {
