@@ -35,8 +35,20 @@ constructor(private http: HttpClient) {
 	
 	 this.columnDefs = [
       {
-        field: "name",
-        cellRenderer: "agGroupCellRenderer"
+        headerName:"Name",
+		field: "name",
+        cellRenderer: "agGroupCellRenderer",
+		rowGroup: true,
+		hide: true
+		
+      },
+	  
+	   {
+        headerName:"Date",
+		field: "date",
+		cellRenderer: "agGroupCellRenderer",
+        rowGroup: true
+		
 		
       }
       
@@ -44,8 +56,7 @@ constructor(private http: HttpClient) {
     this.detailCellRendererParams = {
       detailGridOptions: {
         columnDefs: [
-         
-		 {  field: "high" },
+          {  field: "high" },
 		 { field: "low" },
       { field: "close" }
         ],
