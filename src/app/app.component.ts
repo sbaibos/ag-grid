@@ -37,6 +37,7 @@ constructor(private http: HttpClient) {
       {
         field: "name",
         cellRenderer: "agGroupCellRenderer"
+		
       }
       
     ];
@@ -53,7 +54,7 @@ constructor(private http: HttpClient) {
         }
       },
       getDetailRowData: function(params) {
-        params.successCallback(params.data[0]);
+        params.successCallback(params.data.stock);
       }
     };
 	
@@ -61,8 +62,7 @@ constructor(private http: HttpClient) {
 }
 
 ngOnInit() {
-   // this.rowData = this.http.get('https://api.myjson.com/bins/15psn9');
-    //this.rowData = this.http.get('http://localhost/websites/grid_api/objects/readMytable.php');
+  
 }
 
 // getSelectedRows() {
