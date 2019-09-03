@@ -21,7 +21,7 @@ export class AppComponent {
     // };
 
   columnDefs = [
-    {headerName: 'Name', field: 'name', sortable: true, filter: true, checkboxSelection: true,rowGroup: true },
+    {headerName: 'Name', field: 'name', sortable: true, filter: true, checkboxSelection: true,rowGroup: true, hide: true },
     {headerName: 'Date', field: 'date', sortable: true, filter: true, editable: true},
 	{headerName: 'Open', field: 'open', sortable: true, filter: true, editable: true},
 	{headerName: 'High', field: 'high', sortable: true, filter: true, editable: true},
