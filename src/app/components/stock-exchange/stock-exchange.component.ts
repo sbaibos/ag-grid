@@ -19,16 +19,20 @@ export class StockExchangeComponent implements OnInit {
 
   columnDefs = [
     {headerName: 'Symbol', field: 'symbol', sortable: true, filter: true, chartDataType: "category" },
-    {headerName: 'Sector', field: 'sector', sortable: true, filter: true, editable: true, chartDataType: "series"},
-	{headerName: 'Security Type', field: 'securityType', sortable: true, filter: true, editable: true, chartDataType: "series"},
-	{headerName: 'Bid Price', field: 'bidPrice', sortable: true, filter: true, editable: true, chartDataType: "series"},
-	{headerName: 'Bid Size', field: 'bidSize', sortable: true, filter: true, editable: true, chartDataType: "series"},
-	{headerName: 'Ask Price', field: 'askPrice', sortable: true, filter: true, editable: true, chartDataType: "series"},
-	{headerName: 'Ask Size', field: 'askSize', sortable: true, filter: true, editable: true, chartDataType: "series"},
-	{headerName: 'Last Updated Volume', field: 'lastUpdated', sortable: true, filter: true, editable: true , chartDataType: "series"},
-	{headerName: 'Last Sale Size', field: 'lastSaleSize', sortable: true, filter: true, editable: true, chartDataType: "series"},
-	{headerName: 'Volume', field: 'volume', sortable: true, filter: true, editable: true, chartDataType: "series"},
-	{headerName: 'Market Percent', field: 'marketPercent', sortable: true, filter: true, editable: true, chartDataType: "series"}
+   {headerName: 'Price', field: 'price', sortable: true, filter: true, chartDataType: "series" },
+   {headerName: 'Size', field: 'size', sortable: true, filter: true, chartDataType: "series" },
+   {headerName: 'Time', field: 'time', sortable: true, filter: true, chartDataType: "excluded" },
+   
+   // {headerName: 'Sector', field: 'sector', sortable: true, filter: true, editable: true, chartDataType: "series"},
+	// {headerName: 'Security Type', field: 'securityType', sortable: true, filter: true, editable: true, chartDataType: "series"},
+	// {headerName: 'Bid Price', field: 'bidPrice', sortable: true, filter: true, editable: true, chartDataType: "series"},
+	// {headerName: 'Bid Size', field: 'bidSize', sortable: true, filter: true, editable: true, chartDataType: "series"},
+	// {headerName: 'Ask Price', field: 'askPrice', sortable: true, filter: true, editable: true, chartDataType: "series"},
+	// {headerName: 'Ask Size', field: 'askSize', sortable: true, filter: true, editable: true, chartDataType: "series"},
+	// {headerName: 'Last Updated Volume', field: 'lastUpdated', sortable: true, filter: true, editable: true , chartDataType: "series"},
+	// {headerName: 'Last Sale Size', field: 'lastSaleSize', sortable: true, filter: true, editable: true, chartDataType: "series"},
+	// {headerName: 'Volume', field: 'volume', sortable: true, filter: true, editable: true, chartDataType: "series"},
+	// {headerName: 'Market Percent', field: 'marketPercent', sortable: true, filter: true, editable: true, chartDataType: "series"}
 	
 	
 	
@@ -44,6 +48,7 @@ ngOnInit() {
     
    
 	this.rowData = this.http.get('https://api.iextrading.com/1.0/tops');
+	this.rowData = this.http.get('https://api.iextrading.com/1.0/tops/last');
 	
 }
 

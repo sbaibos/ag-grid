@@ -7,7 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import 'ag-grid-enterprise';
 import { StockExchangeComponent } from './components/stock-exchange/stock-exchange.component';
 import { StockMarketsComponent } from './components/stock-markets/stock-markets.component';
-
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +18,8 @@ import { StockMarketsComponent } from './components/stock-markets/stock-markets.
   imports: [
     BrowserModule,
     AgGridModule.withComponents([]),
-    HttpClientModule
+    HttpClientModule,
+	AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
