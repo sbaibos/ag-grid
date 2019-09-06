@@ -23,6 +23,7 @@
     "ag-grid-angular": "^21.1.0",
     "ag-grid-community": "^21.1.1",
     "ag-grid-enterprise": "^21.1.1",
+    "auth0-js": "^9.11.3",
     "core-js": "^2.5.4",
     "rxjs": "~6.3.3",
     "zone.js": "~0.8.26"
