@@ -8,12 +8,16 @@ import 'ag-grid-enterprise';
 import { StockExchangeComponent } from './components/stock-exchange/stock-exchange.component';
 import { StockMarketsComponent } from './components/stock-markets/stock-markets.component';
 import { AppRoutingModule } from './app-routing.module';
+import { HomeComponent } from './components/home/home.component';
+import { StockExchangeLiveComponent } from './components/stock-exchange-live/stock-exchange-live.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     StockExchangeComponent,
-    StockMarketsComponent
+    StockMarketsComponent,
+    HomeComponent,
+    StockExchangeLiveComponent
   ],
   imports: [
     BrowserModule,

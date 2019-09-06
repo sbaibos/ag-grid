@@ -1,0 +1,18 @@
+<p>
+  stock-exchange-live page
+</p>
+<ag-grid-angular 
+  #agGrid
+  style="width: auto; height: 500px;"   
+  [pagination]="true"
+  [autoGroupColumnDef]="autoGroupColumnDef"
+  class="ag-theme-balham"
+  [rowData]="rowData | async" 
+  [columnDefs]="columnDefs"
+  rowSelection="multiple"
+  [enableRangeSelection]="true"
+  [enableCharts]="true"
+  [popupParent]="popupParent"
+   [getChartToolbarItems]="getChartToolbarItems"
+  >
+</ag-grid-angular>
