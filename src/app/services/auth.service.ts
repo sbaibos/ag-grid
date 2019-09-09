@@ -16,7 +16,7 @@ export class AuthService {
     clientID: 'AddT1U4IxcbNQJ7wMlXWWqTMXh4jeu6W',
     domain: 'dev-eixz1s17.eu.auth0.com',
     responseType: 'token id_token',  
-    redirectUri: 'http://localhost:4200/callback',
+    redirectUri: 'http://localhost:4200/',
     //redirectUri: 'http://sbaibos.com/sotostheme/projects/angularGrid/',
     //redirectUri: 'http://sbaibos.com/myProjects/',
     scope: 'openid'

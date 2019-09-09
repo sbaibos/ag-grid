@@ -15,9 +15,23 @@
   
           <button class="btn btn-primary my-2 my-sm-0 mr-2"
           *ngIf="auth.isAuthenticated()"
-          routerLink="list-project" type="button">
-            Projects
+          routerLink="stock-exchange-live" type="button">
+            Live Stock Exchange
         </button>
+
+
+        <button class="btn btn-primary my-2 my-sm-0 mr-2"
+        *ngIf="auth.isAuthenticated()"
+        routerLink="stock-exchange" type="button">
+          Recent Stock Exchange
+      </button>
+
+
+      <button class="btn btn-primary my-2 my-sm-0 mr-2"
+      *ngIf="auth.isAuthenticated()"
+      routerLink="stock-markets" type="button">
+        Stock Markets
+    </button>
           
   
           <button id="qsLoginBtn"
@@ -38,7 +52,7 @@
     </div>
   </nav>
 
- <main role="main" class="container">
+ <main role="main" class="container-fluid">
   <router-outlet></router-outlet>
 </main>
   
