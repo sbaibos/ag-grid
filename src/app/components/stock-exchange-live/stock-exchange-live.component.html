@@ -1,18 +1,21 @@
 <p>
   stock-exchange-live page
 </p>
+ <div style="margin-bottom: 5px;"><button (click)="onUpdateSomeValues()">Update bidPrice bidSize askPrice</button></div>
+ 
 <ag-grid-angular 
   #agGrid
   style="width: auto; height: 500px;"   
   [pagination]="true"
   [autoGroupColumnDef]="autoGroupColumnDef"
   class="ag-theme-balham"
-  [rowData]="rowData | async" 
+  [rowData]="rowData" 
   [columnDefs]="columnDefs"
   rowSelection="multiple"
   [enableRangeSelection]="true"
   [enableCharts]="true"
   [popupParent]="popupParent"
    [getChartToolbarItems]="getChartToolbarItems"
+   (gridReady)="onGridReady($event)"
   >
 </ag-grid-angular>
