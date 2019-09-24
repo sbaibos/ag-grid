@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Router } from '@angular/router';
 import * as auth0 from 'auth0-js';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +12,15 @@ export class AuthService {
   private _idToken: string;
   private _accessToken: string;
   private _expiresAt: number;
-
+  authUrl = environment.authUrl;
   auth0 = new auth0.WebAuth({
     clientID: 'AddT1U4IxcbNQJ7wMlXWWqTMXh4jeu6W',
     domain: 'dev-eixz1s17.eu.auth0.com',
-    responseType: 'token id_token',  
-    redirectUri: 'http://localhost:4200/',
-    //redirectUri: 'http://sbaibos.com/sotostheme/projects/angularGrid/',
+    responseType: 'token id_token',
+    //redirectUri: this.authUrl,  
+    //redirectUri: 'http://localhost:4200/',
+    //redirectUri: 'http://localhost/websites/angularGrid/',
+    redirectUri: 'http://sbaibos.com/sotostheme/projects/angularGrid/',
     //redirectUri: 'http://sbaibos.com/myProjects/',
     scope: 'openid'
   });

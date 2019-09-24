@@ -97,7 +97,7 @@ ngOnInit() {
 	//this.rowData = this.http.get('https://api.iextrading.com/1.0/tops');
 	
 	this.nasdaq(this.UsaTimeHours);
-	this.testFunction(this.z);
+	this.testFunction();
 }
 
  usaTime = new Date().toLocaleString("en-US", {timeZone: "America/New_York"});
@@ -113,7 +113,7 @@ nasdaqOpenHours2 = (9-this.UsaTimeHours);
 nasdaqMinutes = (60 - this.UsaTimeMinutes)  ;
 nasdaqSeconds = (60 - this.UsaTimeSeconds ) ;
 
-testFunction(z){
+testFunction(){
 
   let x: number = 10, y = 20;
   let z: string;
