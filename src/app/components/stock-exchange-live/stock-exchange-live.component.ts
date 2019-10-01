@@ -206,24 +206,48 @@ onUpdateSomeValues() {
 }//end class
 
 
-var greeceHour = new Date().getHours();
-  var greeceMinutes = new Date().getMinutes();
+
+  //find the new york NASDAQ time--------------
+var now = new Date();
+var nowMs = now.getTime();
+  var localOffset = now.getTimezoneOffset();
+  //get usa offset to any local time
+
+ var usaOffset =  -1* localOffset + 4 * 60
+
+  //get usa date now,get hours minutes 
+
+  var offsetTime = usaOffset * 60 * 1000; //in ms
+  var usaDate = new Date(nowMs - offsetTime);
+  var usaHour = usaDate.getHours();
+  var usaMinutes = usaDate.getMinutes();
+  
+
+
+//alternate way of calculating usa time
+  // usaDate2 = new Date().toLocaleString("en-US", {timeZone: "America/New_York"});
+  // UsaTimeHours2 = new Date(this.usaDate2).getHours();
+  //  UsaTimeMinutes2 =new Date(this.usaDate2).getMinutes();
+  // UsaTimeSeconds2 =new Date(this.usaDate2).getSeconds();
+  // usaTime = usaDate2.getTime();  //string cannot be converted into ms
+
+ 
   
   //---test time-------
-// var greekTime = new Date();
-// greekTime.setHours(23);
-// greekTime.setMinutes(0);
-// greekTime.setSeconds(0);
-// var greeceHour=greekTime.getHours();
-// var greeceMinutes = greekTime.getMinutes();
-// document.getElementById("greekHours").innerHTML = "GreeceHour is "  + greeceHour +" hours " + greeceMinutes +" minutes";
+//  var testUsaTime = usaDate;
+//  testUsaTime.setHours(0);
+// testUsaTime.setMinutes(0);
+//  testUsaTime.setSeconds(0);
+// var usaHour=testUsaTime.getHours();
+// var usaMinutes = testUsaTime.getMinutes();
+//  document.getElementById("testUsaHours").innerHTML = "Usa Hour is "  + usaHour +" hours " + usaMinutes +" minutes";
    //---test time-------
 
-//greek time between  2400 and 16 29
+//usa time between  00 and 9 29
 
-  if((0 <= greeceHour && greeceHour <= 16) || ( greeceHour == 16 && 1 <=greeceMinutes && greeceMinutes <=29 ) ){
+  if((0 <= usaHour && usaHour <= 8) || ( usaHour == 9 && 1 <=usaMinutes && usaMinutes <=29 ) ){
   var nasdaqueTime = new Date();
-nasdaqueTime.setHours(16);
+nasdaqueTime.setHours(9);
 nasdaqueTime.setMinutes(30);
 nasdaqueTime.setSeconds(0);
 var nasdaquesMS = nasdaqueTime.getTime()
@@ -231,15 +255,34 @@ var nasdaquesMS = nasdaqueTime.getTime()
 
 // Update the count down every 1 second
 var x = setInterval(function() {
-// Get today's date and time
-var now = new Date().getTime();
+
+
+  
+  //get usa ms now 
+
+  var now = new Date();
+var nowMs = now.getTime();
+  var localOffset = now.getTimezoneOffset();
+  //get usa offset to any local time
+
+  var usaOffset =  -1* localOffset + 4 * 60
+
+var offsetTime = usaOffset * 60 * 1000; //in ms
+ var  usaDate = new Date(nowMs - offsetTime);
+  var usaTime = usaDate.getTime();
+
+   
+
+ var  usaHour = usaDate.getHours();
+ var usaMinutes = usaDate.getMinutes();
+ var usaSeconds = usaDate.getSeconds();
 
 
 
   
     
   // Find the distance between now and the count down date
-  var distance = nasdaquesMS - now;
+  var distance = nasdaquesMS - usaTime;
     
   // Time calculations for days, hours, minutes and seconds
   var days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -247,22 +290,23 @@ var now = new Date().getTime();
   var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
     
+  document.getElementById("usaTime").innerHTML = "New York time now is  "  + usaHour + "h "
+  + usaMinutes + "m " + usaSeconds + "s ";
+
   // Output the result in an element with id="demo"
   document.getElementById("timer").innerHTML = "NASDAQ will open in " + hours + "h "
   + minutes + "m " + seconds + "s ";
+
+
   
     
-  // If the count down is over, write some text 
-  //if (distance < 0) {
-  //  clearInterval(this.x);
-  //  document.getElementById("timer").innerHTML = "EXPIRED";
- // }
+  
 }, 1000);
   }
-  // greektime between 1631 - 2300
-   if((17 <= greeceHour && greeceHour <= 21) || ( greeceHour == 16 && 30 <=greeceMinutes ) || ( greeceHour == 22 && 1 <= greeceMinutes <= 59) ){
+  // usa between 9 30 - 1700
+  else if( (usaHour == 9 && 30 <=usaMinutes  && usaMinutes <=59) || (10 <= usaHour && usaHour <= 15) || ( usaHour == 16 && 1 <=usaMinutes  && usaMinutes >=59) ){
     var nasdaqueTime = new Date();
-nasdaqueTime.setHours(23);
+nasdaqueTime.setHours(17);
 nasdaqueTime.setMinutes(0);
 nasdaqueTime.setSeconds(0);
 var nasdaquesMS = nasdaqueTime.getTime()
@@ -270,13 +314,28 @@ var nasdaquesMS = nasdaqueTime.getTime()
 
 // Update the count down every 1 second
 var x = setInterval(function() {
-// Get today's date and time
-var now = new Date().getTime();
+
+  //get usa ms now 
+var now = new Date();
+
+var nowMs = now.getTime();
+  var localOffset = now.getTimezoneOffset();
+  //get usa offset to any local time
+
+ var usaOffset =  -1* localOffset + 4 * 60
+
+var offsetTime = usaOffset * 60 * 1000; //in ms
+ var usaDate = new Date(nowMs - offsetTime);
+ var  usaTime = usaDate.getTime();
+
+ var  usaHour = usaDate.getHours();
+ var usaMinutes = usaDate.getMinutes();
+ var usaSeconds = usaDate.getSeconds();
 
 
     
   // Find the distance between now and the count down date
-  var distance = nasdaquesMS - now;
+  var distance = nasdaquesMS - usaTime;
     
   // Time calculations for days, hours, minutes and seconds
   var days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -284,24 +343,23 @@ var now = new Date().getTime();
   var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
     
+  document.getElementById("usaTime").innerHTML = "New York time now is  "  + usaHour + "h "
+  + usaMinutes + "m " + usaSeconds + "s ";
+
   // Output the result in an element with id="demo"
   document.getElementById("timer").innerHTML = "NASDAQ will close in "  + hours + "h "
-  + minutes + "m " + seconds + "s ";
+  + minutes + "m " + seconds + "s " ;
   
     
-  // If the count down is over, write some text 
-  //if (distance < 0) {
-  //  clearInterval(this.x);
-  //  document.getElementById("timer").innerHTML = "EXPIRED";
- // }
+  
 }, 1000);
    
    }
-  //greek time between 23 01 and 23 59
-  if( greeceHour == 23 && 0 <=greeceMinutes && greeceMinutes <=59  ) {
+  //usa time between 17 31 and 23 59
+  else if( (usaHour == 17 && 0 <=usaMinutes && usaMinutes <= 59) || ( 18 <= usaHour && usaHour <= 22  ) || (usaHour == 23 && 1 <=usaMinutes && usaMinutes <= 59 )) {
   // Set the date we're counting down to
   var nasdaqueTime = new Date();
-nasdaqueTime.setHours(40);
+nasdaqueTime.setHours(21);
 nasdaqueTime.setMinutes(30);
 nasdaqueTime.setSeconds(0);
 var nasdaquesMS = nasdaqueTime.getTime();
@@ -310,19 +368,27 @@ var nasdaquesMS = nasdaqueTime.getTime();
 // Update the count down every 1 second
 var x = setInterval(function() {
 // Get today's date and time
-var now = new Date().getTime();
+var now = new Date();
 
-//------test time----
-// var now = new Date();
-// now.setHours(23);
-// now.setMinutes(2);
-// now.setSeconds(0);
-// now.getTime();
+var nowMs = now.getTime();
+  var localOffset = now.getTimezoneOffset();
+  //get usa offset to any local time
 
-  
+  var usaOffset =  -1* localOffset + 4 * 60
+
+  var offsetTime = usaOffset * 60 * 1000; //in ms
+  var usaDate = new Date(nowMs - offsetTime);
+  var  usaTime = usaDate.getTime();
+
+  var usaHour = usaDate.getHours();
+  var usaMinutes = usaDate.getMinutes();
+  var usaSeconds = usaDate.getSeconds();
+
+
+ 
     
   // Find the distance between now and the count down date
-  var distance =  nasdaquesMS - now ;
+  var distance =  nasdaquesMS - usaTime ;
     
   // Time calculations for days, hours, minutes and seconds
   var days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -330,16 +396,15 @@ var now = new Date().getTime();
   var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
     
+  document.getElementById("usaTime").innerHTML = "New York time now is  "  + usaHour + "h "
+  + usaMinutes + "m " + usaSeconds + "s ";
+
   // Output the result in an element with id="demo"
   document.getElementById("timer").innerHTML = "NASDAQ will open in "  + hours + "h "
   + minutes + "m " + seconds + "s ";
   
     
-  // If the count down is over, write some text 
-  //if (distance < 0) {
-  //  clearInterval(this.x);
-  //  document.getElementById("timer").innerHTML = "EXPIRED";
- // }
+  
 }, 1000);
   
   }

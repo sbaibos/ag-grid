@@ -1,11 +1,12 @@
 <p>
-  NASDAQ live page open 0930-1600 eastern time (1630-2300 Greek time)
+  NASDAQ live page open 0930-1700 eastern time (1630-2400 Greek time)
 </p>
 
-  <p> Greek time is {{currentDate | date:'HH:mm'}}  East coast time is {{myUtcDate | date:'HH:mm': '-700'}} </p> 
-  
     
-    <p id="timer"></p>
+    
+  <p id="timer"></p>
+  <!-- <p id="greekHours"></p> -->
+  <p id="usaTime"></p>
 
  <div style="margin-bottom: 5px;"><button (click)="onUpdateSomeValues()">Update bidPrice bidSize askPrice</button></div>
  
