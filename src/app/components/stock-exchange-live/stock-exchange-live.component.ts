@@ -21,6 +21,7 @@ export class StockExchangeLiveComponent implements OnInit {
   private getRowNodeId;
   private components;
   private rowData: any[];
+  private nasdaqueTime;
 	@ViewChild('agGrid') agGrid: AgGridAngular;
   title = 'Stock Exchange';
   currentDate = new Date();
@@ -99,6 +100,8 @@ ngOnInit() {
 	this.nasdaq(this.UsaTimeHours);
 	this.testFunction();
 }
+
+
 
  usaTime = new Date().toLocaleString("en-US", {timeZone: "America/New_York"});
   UsaTimeHours = new Date(this.usaTime).getHours();
@@ -201,10 +204,143 @@ onUpdateSomeValues() {
   
 
 }//end class
-function numberFormatter(params) {
-  if (typeof params.value === "number") {
-    return params.value.toFixed(2);
-  } else {
-    return params.value;
+
+
+var greeceHour = new Date().getHours();
+  var greeceMinutes = new Date().getMinutes();
+  
+  //---test time-------
+// var greekTime = new Date();
+// greekTime.setHours(23);
+// greekTime.setMinutes(0);
+// greekTime.setSeconds(0);
+// var greeceHour=greekTime.getHours();
+// var greeceMinutes = greekTime.getMinutes();
+// document.getElementById("greekHours").innerHTML = "GreeceHour is "  + greeceHour +" hours " + greeceMinutes +" minutes";
+   //---test time-------
+
+//greek time between  2400 and 16 29
+
+  if((0 <= greeceHour && greeceHour <= 16) || ( greeceHour == 16 && 1 <=greeceMinutes && greeceMinutes <=29 ) ){
+  var nasdaqueTime = new Date();
+nasdaqueTime.setHours(16);
+nasdaqueTime.setMinutes(30);
+nasdaqueTime.setSeconds(0);
+var nasdaquesMS = nasdaqueTime.getTime()
+
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+// Get today's date and time
+var now = new Date().getTime();
+
+
+
+  
+    
+  // Find the distance between now and the count down date
+  var distance = nasdaquesMS - now;
+    
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+  // Output the result in an element with id="demo"
+  document.getElementById("timer").innerHTML = "NASDAQ will open in " + hours + "h "
+  + minutes + "m " + seconds + "s ";
+  
+    
+  // If the count down is over, write some text 
+  //if (distance < 0) {
+  //  clearInterval(this.x);
+  //  document.getElementById("timer").innerHTML = "EXPIRED";
+ // }
+}, 1000);
   }
-}
+  // greektime between 1631 - 2300
+   if((17 <= greeceHour && greeceHour <= 21) || ( greeceHour == 16 && 30 <=greeceMinutes ) || ( greeceHour == 22 && 1 <= greeceMinutes <= 59) ){
+    var nasdaqueTime = new Date();
+nasdaqueTime.setHours(23);
+nasdaqueTime.setMinutes(0);
+nasdaqueTime.setSeconds(0);
+var nasdaquesMS = nasdaqueTime.getTime()
+
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+// Get today's date and time
+var now = new Date().getTime();
+
+
+    
+  // Find the distance between now and the count down date
+  var distance = nasdaquesMS - now;
+    
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+  // Output the result in an element with id="demo"
+  document.getElementById("timer").innerHTML = "NASDAQ will close in "  + hours + "h "
+  + minutes + "m " + seconds + "s ";
+  
+    
+  // If the count down is over, write some text 
+  //if (distance < 0) {
+  //  clearInterval(this.x);
+  //  document.getElementById("timer").innerHTML = "EXPIRED";
+ // }
+}, 1000);
+   
+   }
+  //greek time between 23 01 and 23 59
+  if( greeceHour == 23 && 0 <=greeceMinutes && greeceMinutes <=59  ) {
+  // Set the date we're counting down to
+  var nasdaqueTime = new Date();
+nasdaqueTime.setHours(40);
+nasdaqueTime.setMinutes(30);
+nasdaqueTime.setSeconds(0);
+var nasdaquesMS = nasdaqueTime.getTime();
+
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+// Get today's date and time
+var now = new Date().getTime();
+
+//------test time----
+// var now = new Date();
+// now.setHours(23);
+// now.setMinutes(2);
+// now.setSeconds(0);
+// now.getTime();
+
+  
+    
+  // Find the distance between now and the count down date
+  var distance =  nasdaquesMS - now ;
+    
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+  // Output the result in an element with id="demo"
+  document.getElementById("timer").innerHTML = "NASDAQ will open in "  + hours + "h "
+  + minutes + "m " + seconds + "s ";
+  
+    
+  // If the count down is over, write some text 
+  //if (distance < 0) {
+  //  clearInterval(this.x);
+  //  document.getElementById("timer").innerHTML = "EXPIRED";
+ // }
+}, 1000);
+  
+  }
+

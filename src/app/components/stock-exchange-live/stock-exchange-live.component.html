@@ -2,12 +2,11 @@
   NASDAQ live page open 0930-1600 eastern time (1630-2300 Greek time)
 </p>
 
-  <p> Greek time is {{currentDate | date:'HH:mm'}} </p> 
-  <p> East coast time is {{myUtcDate | date:'HH:mm': '-700'}} </p> 
-  <div>usa time {{usaTime}}</div>
-  <div>usa hours {{UsaTimeHours}}</div>
+  <p> Greek time is {{currentDate | date:'HH:mm'}}  East coast time is {{myUtcDate | date:'HH:mm': '-700'}} </p> 
   
-    <div> {{timer}}</div>
+    
+    <p id="timer"></p>
+
  <div style="margin-bottom: 5px;"><button (click)="onUpdateSomeValues()">Update bidPrice bidSize askPrice</button></div>
  
 <ag-grid-angular 
@@ -26,3 +25,4 @@
    (gridReady)="onGridReady($event)"
   >
 </ag-grid-angular>
+

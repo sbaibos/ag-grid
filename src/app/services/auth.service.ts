@@ -18,9 +18,9 @@ export class AuthService {
     domain: 'dev-eixz1s17.eu.auth0.com',
     responseType: 'token id_token',
     //redirectUri: this.authUrl,  
-    //redirectUri: 'http://localhost:4200/',
+    redirectUri: 'http://localhost:4200/',
     //redirectUri: 'http://localhost/websites/angularGrid/',
-    redirectUri: 'http://sbaibos.com/sotostheme/projects/angularGrid/',
+    //redirectUri: 'http://sbaibos.com/sotostheme/projects/angularGrid/',
     //redirectUri: 'http://sbaibos.com/myProjects/',
     scope: 'openid'
   });
