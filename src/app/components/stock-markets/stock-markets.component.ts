@@ -47,13 +47,16 @@ rowData : any;
 constructor(private http: HttpClient) {
 
 }
-baseUrl = environment.baseUrl;
+//baseUrl = environment.baseUrl;
 
 ngOnInit() {
+this.rowData = this.http.get('http://sbaibos.com/sotostheme/api/grid_api/objects/readStock.php');
+  //this.rowData = this.http.get(this.baseUrl);
     //this.rowData = this.http.get('https://api.myjson.com/bins/15psn9');
    // this.rowData = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
-   this.rowData = this.http.get(this.baseUrl);
-	// this.rowData = this.http.get('https://api.myjson.com/bins/ly7d1');
+     // this.rowData = this.http.get('https://api.myjson.com/bins/ly7d1');
+     
+     
 }
 
 // getSelectedRows() {

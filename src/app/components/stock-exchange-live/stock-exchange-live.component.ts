@@ -3,6 +3,11 @@ import { HttpClient } from '@angular/common/http';
  import { AgGridAngular } from 'ag-grid-angular';
 import 'ag-grid-enterprise/chartsModule';
 import {formatDate} from '@angular/common';
+import { Observable, Observer, Subscription, fromEvent } from 'rxjs';
+import { map } from 'rxjs/operators';
+//import 'rxjs/add/observable/interval';
+
+
 
 @Component({
   selector: 'app-stock-exchange-live',
@@ -22,30 +27,36 @@ export class StockExchangeLiveComponent implements OnInit {
   private components;
   private rowData: any[];
   private nasdaqueTime;
+  private stockData;
+  private newData;
 	@ViewChild('agGrid') agGrid: AgGridAngular;
   title = 'Stock Exchange';
   currentDate = new Date();
   myUtcDate: Date;
  
-
+  observable: Observable<string>;
+  observer: Observer<string>;
+  subscription: Subscription;
   
 
 //rowData : any;
 
 constructor(private http: HttpClient) {
-	
+
+  
+
 	this.columnDefs = [
 
    {headerName: 'Symbol', field: 'symbol', sortable: true, filter: true, chartDataType: "category" },
    {headerName: 'Sector', field: 'sector', sortable: true, filter: true, editable: true, chartDataType: "series"},
 	{headerName: 'Security Type', field: 'securityType', sortable: true, filter: true, editable: true, chartDataType: "series"},
-	{headerName: 'Bid Price', field: 'bidPrice', sortable: true, filter: true, editable: true, chartDataType: "series",cellRenderer: "agAnimateShowChangeCellRenderer"},
-	{headerName: 'Bid Size', field: 'bidSize', sortable: true, filter: true, editable: true, chartDataType: "series",cellRenderer: "agAnimateShowChangeCellRenderer"},
-	{headerName: 'Ask Price', field: 'askPrice', sortable: true, filter: true, editable: true, chartDataType: "series",cellRenderer: "agAnimateShowChangeCellRenderer"},
-	{headerName: 'Ask Size', field: 'askSize', sortable: true, filter: true, editable: true, chartDataType: "series",cellRenderer: "agAnimateShowChangeCellRenderer"},
-	{headerName: 'Last Updated Volume', field: 'lastUpdated', sortable: true, filter: true, editable: true , chartDataType: "series",cellRenderer: "agAnimateShowChangeCellRenderer"},
+	{headerName: 'Bid Price', field: 'bidPrice', sortable: true, filter: true, editable: true, chartDataType: "series",cellRenderer: "agAnimateShowChangeCellRenderer", valueParser: "Number(newValue)"},
+	{headerName: 'Bid Size', field: 'bidSize', sortable: true, filter: true, editable: true, chartDataType: "series",cellRenderer: "agAnimateShowChangeCellRenderer",valueParser: "Number(newValue)"},
+	{headerName: 'Ask Price', field: 'askPrice', sortable: true, filter: true, editable: true, chartDataType: "series",cellRenderer: "agAnimateShowChangeCellRenderer",valueParser: "Number(newValue)"},
+	{headerName: 'Ask Size', field: 'askSize', sortable: true, filter: true, editable: true, chartDataType: "series",cellRenderer: "agAnimateShowChangeCellRenderer",valueParser: "Number(newValue)"},
+	{headerName: 'Last Updated Volume', field: 'lastUpdated', sortable: true, filter: true, editable: true , chartDataType: "series",cellRenderer: "agAnimateShowChangeCellRenderer",valueParser: "Number(newValue)"},
 	{headerName: 'Last Sale Size', field: 'lastSaleSize', sortable: true, filter: true, editable: true, chartDataType: "series"},
-	{headerName: 'Volume', field: 'volume', sortable: true, filter: true, editable: true, chartDataType: "series",cellRenderer: "agAnimateShowChangeCellRenderer"},
+	{headerName: 'Volume', field: 'volume', sortable: true, filter: true, editable: true, chartDataType: "series",cellRenderer: "agAnimateShowChangeCellRenderer",valueParser: "Number(newValue)"},
 	{headerName: 'Market Percent', field: 'marketPercent', sortable: true, filter: true, editable: true, chartDataType: "series"}
 	
 	
@@ -72,7 +83,7 @@ constructor(private http: HttpClient) {
 
 this.defaultColDef = { resizable: true };
     this.rowSelection = "multiple";
-    this.rowModelType = "viewport";
+    
     this.getRowNodeId = function(data) {
       return data.code;
     };
@@ -84,9 +95,24 @@ this.defaultColDef = { resizable: true };
 	
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
 z;
 timer;
+
 ngOnInit() {
+
+  
     this.myUtcDate = new Date(Date.UTC(
       this.currentDate.getFullYear(),
       this.currentDate.getMonth(),
@@ -170,38 +196,161 @@ nasdaq(UsaTimeHours){
 
 }
 
+ 
+
+
 
 onGridReady(params) {
+	
     this.gridApi = params.api;
+    //this.gridApi.refreshCells(params.api);
     this.gridColumnApi = params.columnApi;
 
-    //this.rowData = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
- // this.rowData =  this.http.get('https://api.iextrading.com/1.0/tops');
+   
+// this.gridApi.setRowData(this.rowData);
 
+// this.gridApi.forEachNodeAfterFilterAndSort(function (rowData) {
+
+//   this.rowNode.setDataValue("bidPrice","data.bidPrice");
+  
+  
+//   });
+    //this.rowData = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
+ //var rowData =  this.http.get('https://api.iextrading.com/1.0/tops');
+
+
+
+ 
   this.http.get("https://api.iextrading.com/1.0/tops").subscribe(data => {
-    this.rowData = Object.values(data);
-    setTimeout(function() {
-      params.api.sizeColumnsToFit();
-    }, 100);
-  });
+   this.rowData = Object.values(data);
+    
+  //this.rowData = data;
+    
+  
+ });
+
+
+ 
+
+//    setInterval(()=>{
+    
+//     this.http.get("https://api.iextrading.com/1.0/tops").subscribe(data => {
+//       this.rowData = Object.values(data);
+   
+  
+//       this.gridApi.UpdateRowData(this.rowData) ;
+  
+//  });
+  
+    
+  
+  
+//   },3000);
 
 
 
   
   }
+
+  
+  onBtForEachNode() {
+  console.log("### api.forEachNode() ###");
+  this.gridApi.forEachNode(this.printNode);
+  
+}
+
+printNode(node, index) {
+  if (node.group) {
+    console.log(index + " -> group: " + node.key);
+  } else {
+    console.log(index + " -> data: " + node.data.symbol + ", " + node.data.bidPrice);
+    
+  }
+  
+  
+  
+
+}
+
+
+  
+
+bachUpdate(){
+
+   // setInterval(()=>{
+    
+    // this.http.get("https://api.iextrading.com/1.0/tops").subscribe(data => {
+      // this.rowData = Object.values(data);
+   
+  
+      // this.gridApi.UpdateRowData(this.rowData) ;
+  
+ // });
+  
+    
+  
+  
+  // },3000);
+  
+ 
+    
+    this.http.get("https://api.iextrading.com/1.0/tops").subscribe(data => {
+    var  newData = Object.values(data);;
+   
+  
+      this.gridApi.UpdateRowData(newData) ;
+	  
+	 // this.gridApi.setDataValue(newData) ;
+	  
+	  
+  
+ });
+  
+    
+  
+  
+    
+  
+
+}
+  
 
 onUpdateSomeValues() {
-    var rowCount = this.gridApi.getDisplayedRowCount();
-    for (var i = 0; i < 100; i++) {
-      var row = Math.floor(Math.random() * rowCount);
-      var rowNode = this.gridApi.getDisplayedRowAtIndex(row);
-      rowNode.setDataValue("bidPrice", Math.floor(Math.random() * 10000));
-      rowNode.setDataValue("bidSize", Math.floor(Math.random() * 10000));
-	  rowNode.setDataValue("askPrice", Math.floor(Math.random() * 10000));
-    }
-  }
+	
+	
+	
+ 
+
+	
+	
+  var rowCount = this.gridApi.getDisplayedRowCount();
+  for (var i = 0; i < 100; i++) {
+    var row = Math.floor(Math.random() * rowCount);
+    var rowNode = this.gridApi.getDisplayedRowAtIndex(row);
+    rowNode.setDataValue("bidPrice",Math.floor(Math.random() * 10000));
+    rowNode.setDataValue("bidSize", Math.floor(Math.random() * 10000));
+  rowNode.setDataValue("askPrice", Math.floor(Math.random() * 10000));
   
+ 
+}
+
+
+
+
+
+ // this.columnDefs['bidSize'])
+ for (var key in rowNode) {
+    console.log(rowNode[key]);
+}
+
+
   
+}
+
+
+
+
+
 
 }//end class
 

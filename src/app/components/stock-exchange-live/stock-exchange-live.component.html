@@ -9,6 +9,8 @@
   <p id="usaTime"></p>
 
  <div style="margin-bottom: 5px;"><button (click)="onUpdateSomeValues()">Update bidPrice bidSize askPrice</button></div>
+ <button (click)="onBtForEachNode()">For-Each Node</button>
+ <button (click)="bachUpdate()">bachUpdate</button>
  
 <ag-grid-angular 
   #agGrid
@@ -23,7 +25,10 @@
   [enableCharts]="true"
    [popupParent]="popupParent" 
    [getChartToolbarItems]="getChartToolbarItems"
-   (gridReady)="onGridReady($event)"
+   [rowModelType]="rowModelType"
+   
+   
+    (gridReady)="onGridReady($event)"
   >
 </ag-grid-angular>
 
