@@ -5,6 +5,7 @@ import 'ag-grid-enterprise/chartsModule';
 import {formatDate} from '@angular/common';
 import { Observable, Observer, Subscription, fromEvent } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { GridApi } from 'ag-grid-community';
 //import 'rxjs/add/observable/interval';
 
 
@@ -28,7 +29,7 @@ export class StockExchangeLiveComponent implements OnInit {
   private rowData: any[];
   private nasdaqueTime;
   private stockData;
-  private newData;
+  private newData:any[];
 	@ViewChild('agGrid') agGrid: AgGridAngular;
   title = 'Stock Exchange';
   currentDate = new Date();
@@ -323,16 +324,22 @@ onUpdateSomeValues() {
 
 	
 	
-  var rowCount = this.gridApi.getDisplayedRowCount();
+  var rowCount = this.gridApi.getDisplayedRowCount();//8869
   for (var i = 0; i < 100; i++) {
-    var row = Math.floor(Math.random() * rowCount);
-    var rowNode = this.gridApi.getDisplayedRowAtIndex(row);
+    var row = Math.floor(Math.random() * rowCount);//a random number
+      var rowNode = this.gridApi.getDisplayedRowAtIndex(row);//object object, Returns the displayed rowNode at the given index.
     rowNode.setDataValue("bidPrice",Math.floor(Math.random() * 10000));
     rowNode.setDataValue("bidSize", Math.floor(Math.random() * 10000));
   rowNode.setDataValue("askPrice", Math.floor(Math.random() * 10000));
   
+  
+  // console.log("row count is "+rowCount);
+  // console.log("row is "+row);
+// console.log("rownode is "+ rowNode)
  
 }
+
+
 
 
 
@@ -346,6 +353,49 @@ onUpdateSomeValues() {
 
   
 }
+
+updateBidprice(){
+
+  // for (var i = 0; i < 100; i++) {
+  // var row = 100;
+    // var rowNode = this.gridApi.getDisplayedRowAtIndex(1);
+  // rowNode.setDataValue("bidPrice",Math.floor(Math.random() * 10000));
+  // }
+
+
+   this.http.get("https://api.iextrading.com/1.0/tops").subscribe(data => {
+   this.rowData = Object.values(data);
+  
+  
+    
+  
+ });
+ 
+ 
+ 
+ 
+  
+  
+  this.gridApi.forEachNode( function(rowNode, index) {
+	  
+
+//r q = parseInt(rowData.bidPrice);
+    //console.log('node ' + rowNode.data.bidPrice + ' is in the grid');
+	rowNode.setDataValue("bidPrice", rowNode.data.bidPrice);
+	
+	//console.log(typeof rowNode.data.bidPrice);//number
+	
+});
+
+  
+   this.gridApi.refreshCells();
+  
+	
+}
+
+
+
+
 
 
 
@@ -497,7 +547,7 @@ var offsetTime = usaOffset * 60 * 1000; //in ms
 
   // Output the result in an element with id="demo"
   document.getElementById("timer").innerHTML = "NASDAQ will close in "  + hours + "h "
-  + minutes + "m " + seconds + "s " ;
+  + minutes + "m " + seconds + "s " + "if 2";
   
     
   
@@ -508,7 +558,7 @@ var offsetTime = usaOffset * 60 * 1000; //in ms
   else if( (usaHour == 17 && 0 <=usaMinutes && usaMinutes <= 59) || ( 18 <= usaHour && usaHour <= 22  ) || (usaHour == 23 && 1 <=usaMinutes && usaMinutes <= 59 )) {
   // Set the date we're counting down to
   var nasdaqueTime = new Date();
-nasdaqueTime.setHours(21);
+nasdaqueTime.setHours(9);
 nasdaqueTime.setMinutes(30);
 nasdaqueTime.setSeconds(0);
 var nasdaquesMS = nasdaqueTime.getTime();
@@ -550,7 +600,7 @@ var nowMs = now.getTime();
 
   // Output the result in an element with id="demo"
   document.getElementById("timer").innerHTML = "NASDAQ will open in "  + hours + "h "
-  + minutes + "m " + seconds + "s ";
+  + minutes + "m " + seconds + "s " + "if 3";
   
     
   
