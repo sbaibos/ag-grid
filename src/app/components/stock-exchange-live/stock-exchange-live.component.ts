@@ -27,9 +27,11 @@ export class StockExchangeLiveComponent implements OnInit {
   private getRowNodeId;
   private components;
   private rowData: any[];
-  private nasdaqueTime;
+    private nasdaqueTime;
   private stockData;
   private newData:any[];
+  private stock:any;
+  private rowData2: any[];
 	@ViewChild('agGrid') agGrid: AgGridAngular;
   title = 'Stock Exchange';
   currentDate = new Date();
@@ -362,36 +364,75 @@ updateBidprice(){
   // rowNode.setDataValue("bidPrice",Math.floor(Math.random() * 10000));
   // }
 
-
+   var itemsToUpdate = [];
    this.http.get("https://api.iextrading.com/1.0/tops").subscribe(data => {
-   this.rowData = Object.values(data);
+   this.rowData2 = Object.values(data);
+   
+   
+	
+    this.gridApi.forEachNodeAfterFilterAndSort(function(rowNode,rowData2, index) {
+      if (index >= 500) {
+        return;
+      }
+	  
+      var data = rowNode.data;
+      //data = rowNode.data;
+	 //console.log(rowNode.data.symbol);
+	  //data.bidPrice = Math.floor(Math.random() * 20000 + 20000);
+	  data.bidPrice = rowData2.symbol;
+      itemsToUpdate.push(data);
+    });
+    var res = this.gridApi.updateRowData({ update: itemsToUpdate });
+   
+   
+   
+    });
+	
+	// var rowNode = this.gridApi.getDisplayedRowAtIndex(0);
+  //  rowNode.setData(this.rowData2);
+	
   
+   
   
     
-  
- });
+    
  
- 
- 
- 
-  
-  
-  this.gridApi.forEachNode( function(rowNode, index) {
-	  
-
-//r q = parseInt(rowData.bidPrice);
-    //console.log('node ' + rowNode.data.bidPrice + ' is in the grid');
-	rowNode.setDataValue("bidPrice", rowNode.data.bidPrice);
-	
-	//console.log(typeof rowNode.data.bidPrice);//number
-	
-});
-
-  
-   this.gridApi.refreshCells();
-  
 	
 }
+	
+
+
+  //rowNode();
+  
+  
+
+ 
+
+ 
+ 
+  
+  
+  // this.gridApi.forEachNode( ()=> {
+	  
+// var rowNode = this.gridApi.getDisplayedRowAtIndex(0);
+ 
+    // //console.log('node ' + rowNode.data.bidPrice + ' is in the grid');
+	// rowNode.setDataValue("bidPrice", rowdata.bidPrice);
+	
+	// //console.log(typeof rowNode.data.bidPrice);//number
+	
+// });
+
+ 
+
+
+
+ ProjectDetails(stock){
+		var rowNode = this.gridApi.getDisplayedRowAtIndex(0);
+		rowNode.setDataValue("bidPrice", stock.bidPrice);
+		console.log(stock.bidPrice);
+		
+	}
 
 
 
@@ -404,7 +445,16 @@ updateBidprice(){
 
 }//end class
 
+function myFunction(item, index) {
+  document.getElementById("demo").innerHTML += index + ":" + item + "<br>"; 
+   console.log(this.gridApi.rowData['bidPrice']);
+}
 
+// function rowNode() {
+  
+    // rowNode.setDataValue("bidPrice", rowNode.data.bidPrice);
+	
+	// };
 
   //find the new york NASDAQ time--------------
 var now = new Date();
