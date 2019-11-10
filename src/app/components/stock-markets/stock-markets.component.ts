@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
  import { AgGridAngular } from 'ag-grid-angular';
 import 'ag-grid-enterprise/chartsModule';
 import { environment } from '../../../environments/environment';
+import { GridApi } from 'ag-grid-community';
 
 @Component({
   selector: 'app-stock-markets',
@@ -13,6 +14,7 @@ export class StockMarketsComponent implements OnInit {
 
   private gridApi;
 	private gridColumnApi;
+	private rowData2: any;
 	@ViewChild('agGrid') agGrid: AgGridAngular;
   title = 'Stock Markets';
   
@@ -28,7 +30,7 @@ export class StockMarketsComponent implements OnInit {
   columnDefs = [
     {headerName: 'Name', field: 'name', sortable: true, filter: true, checkboxSelection: true,rowGroup: true, hide: true,chartDataType: "excluded" },
     {headerName: 'Date', field: 'date', sortable: true, filter: true, editable: true, chartDataType: "category"},
-	{headerName: 'Open', field: 'open', sortable: true, filter: true, editable: true, chartDataType: "series"},
+	{headerName: 'Open', field: 'open', sortable: true, filter: true, editable: true, chartDataType: "series", cellRenderer: "agAnimateShowChangeCellRenderer", valueParser: "Number(newValue)"},
 	{headerName: 'High', field: 'high', sortable: true, filter: true, editable: true, chartDataType: "series"},
 	{headerName: 'Low', field: 'low', sortable: true, filter: true, editable: true, chartDataType: "series"},
 	{headerName: 'Close', field: 'close', sortable: true, filter: true, editable: true, chartDataType: "series"},
@@ -41,6 +43,7 @@ export class StockMarketsComponent implements OnInit {
 	
 ];
 
+
 rowData : any;
 
 
@@ -50,10 +53,10 @@ constructor(private http: HttpClient) {
 //baseUrl = environment.baseUrl;
 
 ngOnInit() {
-this.rowData = this.http.get('http://sbaibos.com/sotostheme/api/grid_api/objects/readStock.php');
+//this.rowData = this.http.get('http://sbaibos.com/sotostheme/api/grid_api/objects/readStock.php');
   //this.rowData = this.http.get(this.baseUrl);
     //this.rowData = this.http.get('https://api.myjson.com/bins/15psn9');
-   // this.rowData = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
+    this.rowData = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
      // this.rowData = this.http.get('https://api.myjson.com/bins/ly7d1');
      
      
@@ -94,10 +97,109 @@ this.rowData = this.http.get('http://sbaibos.com/sotostheme/api/grid_api/objects
 
 
   
-  // onGridReady(params) {
-    // this.gridApi = params.api;
-    // this.gridColumnApi = params.columnApi;
-// }
+  onGridReady(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+}
+  
+  
+  updateBidprice(){
+
+  // for (var i = 0; i < 100; i++) {
+  // var row = 100;
+    // var rowNode = this.gridApi.getDisplayedRowAtIndex(1);
+  // rowNode.setDataValue("bidPrice",Math.floor(Math.random() * 10000));
+  // }
+
+  
+   this.rowData2 = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
+   
+   var itemsToUpdate = [];
+   var rowNode = this.gridApi.getDisplayedRowAtIndex(1);
+  this.rowData2.forEach(function (value) {
+  
+  
+  
+ itemsToUpdate.push(value);
+ 
+console.log(value["0"].open);
+
+console.log(value);
+
+ for (var i in value) {
+      console.log(value[i]["open"]);
+    rowNode.setDataValue("open",value[i]["open"]);
+	}
+
+ 
+
+	  
+
+//r q = parseInt(rowData.bidPrice);
+    //console.log('node ' + rowNode.data.bidPrice + ' is in the grid');
+	
+	//console.log(typeof rowNode.data.bidPrice);//number
+	
+
+  
+   
+}); 
+
+
+
+
+
+
+
+  // this.gridApi.updateRowData({ update: itemsToUpdate });
+  //this.gridApi.setRowData(this.rowData2);
+
+// var newStore = [];
+    // this.rowData2.forEach(function(item) {
+      // newStore.push({
+        // symbol: item.symbol,
+        // group: item.group,
+        // open: Math.floor(Math.random() * 100)
+      // });
+    // });
+  // var  immutableStore = newStore;
+    // this.gridApi.setRowData(immutableStore);
+
+
+
+
+
+	
+    // this.gridApi.forEachNodeAfterFilterAndSort(function(rowNode,rowData2, index) {
+      // if (index >= 500) {
+        // return;
+      // }
+	  
+      // var data = rowNode.data;
+      // //data = rowNode.data;
+	 // //console.log(rowNode.data.symbol);
+	  // //data.bidPrice = Math.floor(Math.random() * 20000 + 20000);
+	  // data.high = rowData2.high;
+      // itemsToUpdate.push(data);
+    // });
+    //var res = this.gridApi.updateRowData({ update: itemsToUpdate });
+   
+   
+   
+    }
+	
+	// var rowNode = this.gridApi.getDisplayedRowAtIndex(0);
+  //  rowNode.setData(this.rowData2);
+	
+  
+   
+  
+    
+    
+ 
+	
+
+  
   
   // chartLine() {
     // var cellRange = {

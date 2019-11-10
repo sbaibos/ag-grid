@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
  import { AgGridAngular } from 'ag-grid-angular';
 import 'ag-grid-enterprise/chartsModule';
 
+
 @Component({
   selector: 'app-stock-exchange',
   templateUrl: './stock-exchange.component.html',
@@ -11,7 +12,8 @@ import 'ag-grid-enterprise/chartsModule';
 export class StockExchangeComponent implements OnInit {
 
    private gridApi;
-	private gridColumnApi;
+  private gridColumnApi;
+  
 	@ViewChild('agGrid') agGrid: AgGridAngular;
   title = 'Stock Exchange';
   
@@ -43,10 +45,12 @@ ngOnInit() {
 }
 
 
+
+
 	
 
 
-  
+
  
 
 

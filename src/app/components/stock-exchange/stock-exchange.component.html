@@ -1,6 +1,7 @@
 <p>
   stock-exchange page
 </p>
+<button (click)="updateBidprice()">updateBidprice</button>
 
 <ag-grid-angular 
   #agGrid
@@ -15,5 +16,7 @@
   [enableCharts]="true"
    [popupParent]="popupParent" 
    [getChartToolbarItems]="getChartToolbarItems"
+   
   >
 </ag-grid-angular>
+
