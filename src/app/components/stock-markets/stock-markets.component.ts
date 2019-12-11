@@ -115,23 +115,27 @@ ngOnInit() {
    this.rowData2 = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
    
    var itemsToUpdate = [];
-   var rowNode = this.gridApi.getDisplayedRowAtIndex(1);
+   var rowNode = this.gridApi.getDisplayedRowAtIndex(1);//objectId:42
+   
   this.rowData2.forEach(function (value) {
   
   
   
  itemsToUpdate.push(value);
  
-console.log(value["0"].open);
+//console.log(value["0"].open);//0.194
 
-console.log(value);
+console.log(value);//array with all stockmarket values
 
  for (var i in value) {
-      console.log(value[i]["open"]);
+      console.log(value[i]["open"]); //open values
     rowNode.setDataValue("open",value[i]["open"]);
 	}
 
- 
+
+  //var rowNode = this.gridApi.getDisplayedRowAtIndex(row);
+  
+  
 
 	  
 
@@ -192,7 +196,29 @@ console.log(value);
   //  rowNode.setData(this.rowData2);
 	
   
+   onUpdateSomeValues() {
+	
+	
+	
+ 
+
+	
+	
+  var rowCount = this.gridApi.getDisplayedRowCount();//8869
+  for (var i = 1; i < 11; i++) {
+   // var row = Math.floor(10 * rowCount);//a random number
+      var rowNode = this.gridApi.getDisplayedRowAtIndex(i);//object object, Returns the displayed rowNode at the given index.
+    rowNode.setDataValue("open",Math.floor(Math.random() * 10000));
    
+  
+  
+  // console.log("row count is "+rowCount);
+  // console.log("row is "+row);
+// console.log("rownode is "+ rowNode)
+ 
+}
+
+   }
   
     
     
