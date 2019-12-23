@@ -1,8 +1,10 @@
 <p>
   stock-markets page
 </p>
- <button (click)="updateBidprice()">updateBidprice</button>
- <button (click)="onUpdateSomeValues()">onUpdateSomeValues</button>
+ <button (click)="updateColumn()">updateColumn</button>
+ <button (click)="SetRandomData()">set random numbers</button>
+ <button (click)="setData()">setData</button>
+ 
  
 <ag-grid-angular 
   #agGrid
@@ -12,11 +14,12 @@
   class="ag-theme-balham"
   [rowData]="rowData | async" 
   [columnDefs]="columnDefs"
-  rowSelection="multiple"
-  [enableRangeSelection]="true"
+   [enableRangeSelection]="true"
   [enableCharts]="true"
    [popupParent]="popupParent" 
    [getChartToolbarItems]="getChartToolbarItems"
+    [rowSelection]="rowSelection"
+	 (selectionChanged)="getSelectedRowNode($event)"
   
    (gridReady)="onGridReady($event)"
   >
