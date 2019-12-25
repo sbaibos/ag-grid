@@ -107,46 +107,29 @@ export class StockMarketsComponent implements OnInit {
   }
 
 
-  getData() {
+  updateColumn() {
     this.rowData2 = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
-    var OpenValues = [];
-	var CloseValues = [];
-	var data = [];
+     
+	var gridApi1 = this.gridApi;
     this.rowData2.forEach(function (value) {
 
+	var gridApi2 = gridApi1;
 
       //console.log(value);//array with all stockmarket values
 
       for (var i in value) {
-
-        //console.log(value[i]["open"]); //open values
-        OpenValues.push(value[i]["open"]);//array with open values
-        CloseValues.push(value[i]["close"]);
-       // console.log(itemsToUpdate);//array with open values
+		  
+ var rowNode = gridApi2.getDisplayedRowAtIndex(i);
+  rowNode.setDataValue("open", value[i]["open"]);
+      
       }
 
     }); //end foreach
-console.log(OpenValues);
-    //return OpenValues;
-data.push(OpenValues, CloseValues);
-console.log(data);
-    return data;
-  }//end get data
-
-  getRowNode() {
-
-var rowNode;
-    for (var i = 1; i < 11; i++) {
-      // var row = Math.floor(10 * rowCount);//a random number
-       rowNode = this.gridApi.getDisplayedRowAtIndex(i);//object object, Returns the displayed rowNode at the given index.
 
 
+  }//end update column 
 
 
-    }//end for
-    return rowNode;
-
-  }
 
   getSelectedRowNode() {
     var selectedRows = this.gridApi.getSelectedNodes();
@@ -166,75 +149,6 @@ var rowNode;
 
   }
 
-
-
-  updateColumn() {
-
-    // for (var i = 0; i < 100; i++) {
-    // var row = 100;
-    // var rowNode = this.gridApi.getDisplayedRowAtIndex(1);
-    // rowNode.setDataValue("bidPrice",Math.floor(Math.random() * 10000));
-    // }
-
-
-    this.rowNode = this.getRowNode();
-    var itemsToUpdate = this.getData();
-
-
-    // var itemsToUpdate2 = Object.values(itemsToUpdate[0][i]);
-
-    this.rowNode.setDataValue("open", itemsToUpdate);
-
-
-
-
-
-
-
-    //api.setRowData(itemsToUpdate);  
-
-
-
-
-    // this.gridApi.updateRowData({ update: itemsToUpdate });
-    //this.gridApi.setRowData(this.rowData2);
-
-    // var newStore = [];
-    // this.rowData2.forEach(function(item) {
-    // newStore.push({
-    // symbol: item.symbol,
-    // group: item.group,
-    // open: Math.floor(Math.random() * 100)
-    // });
-    // });
-    // var  immutableStore = newStore;
-    // this.gridApi.setRowData(immutableStore);
-
-
-
-
-
-
-    // this.gridApi.forEachNodeAfterFilterAndSort(function(rowNode,rowData2, index) {
-    // if (index >= 500) {
-    // return;
-    // }
-
-    // var data = rowNode.data;
-    // //data = rowNode.data;
-    // //console.log(rowNode.data.symbol);
-    // //data.bidPrice = Math.floor(Math.random() * 20000 + 20000);
-    // data.high = rowData2.high;
-    // itemsToUpdate.push(data);
-    // });
-    //var res = this.gridApi.updateRowData({ update: itemsToUpdate });
-
-
-
-  }
-
-  // var rowNode = this.gridApi.getDisplayedRowAtIndex(0);
-  //  rowNode.setData(this.rowData2);
 
 
   SetRandomData() {
@@ -261,37 +175,35 @@ var rowNode;
 
   setData() {
 
-    this.rowData2 = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
-
-    //var openArray = [];
-	var closeArray = [];
-    var rowNode = this.getRowNode();
-    var data = this.getData();//array
-console.log(data);
-
- var openArray = data[0];//open values array
- var closeArray= data[1];//close values array
-
-console.log(openArray);
-
-
-    for (var i = 0; i < 4; i++) {
-
-      
-      
-      var openValues = openArray.0[i]; //undefined
-	var closeValues = closeArray.0[i];//undefined
-      
-   console.log(openValues);   
-    
-	var newData = {
-        open: openValues,
-        close: closeValues
-      };
-	 
-	   rowNode.setData(newData);
+   this.rowData2 = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
 	
-	}//end for
+	var gridApi1 = this.gridApi;
+    this.rowData2.forEach(function (value) {
+
+	var gridApi2 = gridApi1;
+
+      //console.log(value);//array with all stockmarket values
+
+      for (var i in value) {
+		  
+ var rowNode = gridApi2.getDisplayedRowAtIndex(i);
+       
+var newData  = {
+        open: value[i]["open"],
+        close: value[i]["close"]
+      };
+	  
+	  rowNode.setData(newData);
+      }
+
+    }); //end foreach
+	 
+     
+	
+	 
+	   
+	
+
 	
 	
 
@@ -300,6 +212,26 @@ console.log(openArray);
   }//end set data
 
 
+ setData2() {
+  
+for (var i = 0; i < 3; i++) {
+   var array1 = [1,2,3,4];//array  1,2,3,4
+   var array2 = [5,6,7,8];
+      var rowNode = this.gridApi.getDisplayedRowAtIndex(i);
+
+       
+    
+       var openValues = array1[i];//array  values
+      var closeValues = array2[i];
+	  console.log(openValues);
+    var newData = {
+        open: openValues,
+      high: closeValues
+    };
+rowNode.setData(newData);
+      }//end for
+	  
+   }//end set data 2
 
 
 
@@ -307,18 +239,6 @@ console.log(openArray);
 
 
 
-
-  // chartLine() {
-  // var cellRange = {
-  // rowStartIndex: 1,
-  // rowEndIndex: 20,
-  // columns: ["name", "volume"]
-  // };
-  // var chartRangeParams = {
-  // cellRange: cellRange,
-  // chartType: "line"
-  // };
-  // this.gridApi.chartRange(chartRangeParams);
-  // }
+ 
 
 }
