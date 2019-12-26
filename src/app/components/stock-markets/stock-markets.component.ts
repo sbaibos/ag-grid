@@ -17,6 +17,7 @@ export class StockMarketsComponent implements OnInit {
   private gridColumnApi;
   private rowData2: any;
   private rowSelection;
+  private autoGroupColumnDef;
 
   @ViewChild('agGrid') agGrid: AgGridAngular;
   title = 'Stock Markets';
@@ -53,6 +54,14 @@ export class StockMarketsComponent implements OnInit {
 
   constructor(private http: HttpClient) {
     this.rowSelection = "multiple";
+	
+	 this.autoGroupColumnDef = {
+      headerName: "Name",
+      field: "name",
+      width: 200,
+      cellRenderer: "agGroupCellRenderer",
+      cellRendererParams: { checkbox: true }
+    };
   }
   //baseUrl = environment.baseUrl;
 
