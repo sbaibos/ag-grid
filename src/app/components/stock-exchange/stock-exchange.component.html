@@ -1,7 +1,8 @@
 <p>
   stock-exchange page
 </p>
-<button (click)="updateBidprice()">updateBidprice</button>
+<button (click)="updateColumn()">updateColumns</button>
+<button (click)="SetRandomData()">set random numbers</button>
 
 <ag-grid-angular 
   #agGrid
@@ -16,6 +17,7 @@
   [enableCharts]="true"
    [popupParent]="popupParent" 
    [getChartToolbarItems]="getChartToolbarItems"
+   (gridReady)="onGridReady($event)"
    
   >
 </ag-grid-angular>
