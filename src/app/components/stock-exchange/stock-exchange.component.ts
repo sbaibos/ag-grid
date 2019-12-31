@@ -95,9 +95,61 @@ rowNode.setDataValue("price", value[i]["price"]);
     }
 
   }
+
+  // transactionUpdate2() {
+	      // var itemsToUpdate = [];
+    // this.gridApi.forEachNodeAfterFilterAndSort(function(rowNode, index) {
+		 
+      // if (index >= 5) {
+        // return;
+      // }
+	 
+      // var data = rowNode.data;
+	  
+      // data.price = Math.floor(Math.random() * 20000 + 20000);
+	  
+      // itemsToUpdate.push(data);
+	  
+	  
+    // });
+    // this.gridApi.updateRowData({ update: itemsToUpdate });
+   
+  // }
+  
+  
+  
+  transactionUpdate() {
+  this.rowData2 = this.http.get('https://api.iextrading.com/1.0/tops/last');
+   var itemsToUpdate = [];
+var gridApi1 = this.gridApi;
+  this.rowData2.forEach(function (value) {
+
+var gridApi2 = gridApi1;
+
+    //console.log(value);//array with all stockmarket values
+
+    for (var i in value) {
+    
+var rowNode = gridApi2.getDisplayedRowAtIndex(i);
+
+var data = rowNode.data;
+	  
+      data.price = value[i]["price"];
+	  
+      itemsToUpdate.push(data);
+    
+    }
 	
+	 
 
+  }); //end foreach
 
+  
+this.gridApi.updateRowData({ update: itemsToUpdate });
+}//end function
+  
+   
+   
 
  
 
