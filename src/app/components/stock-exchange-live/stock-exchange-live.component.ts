@@ -26,12 +26,13 @@ export class StockExchangeLiveComponent implements OnInit {
   private rowModelType;
   private getRowNodeId;
   private components;
-  private rowData: any[];
+ // private rowData: any[];
+  private rowData: any;
     private nasdaqueTime;
   private stockData;
   private newData:any[];
   private stock:any;
-  private rowData2: any[];
+  private rowData2: any;
 	@ViewChild('agGrid') agGrid: AgGridAngular;
   title = 'Stock Exchange';
   currentDate = new Date();
@@ -51,16 +52,17 @@ constructor(private http: HttpClient) {
 	this.columnDefs = [
 
    {headerName: 'Symbol', field: 'symbol', sortable: true, filter: true, chartDataType: "category" },
-   {headerName: 'Sector', field: 'sector', sortable: true, filter: true, editable: true, chartDataType: "series"},
-	{headerName: 'Security Type', field: 'securityType', sortable: true, filter: true, editable: true, chartDataType: "series"},
+  
 	{headerName: 'Bid Price', field: 'bidPrice', sortable: true, filter: true, editable: true, chartDataType: "series",cellRenderer: "agAnimateShowChangeCellRenderer", valueParser: "Number(newValue)"},
 	{headerName: 'Bid Size', field: 'bidSize', sortable: true, filter: true, editable: true, chartDataType: "series",cellRenderer: "agAnimateShowChangeCellRenderer",valueParser: "Number(newValue)"},
 	{headerName: 'Ask Price', field: 'askPrice', sortable: true, filter: true, editable: true, chartDataType: "series",cellRenderer: "agAnimateShowChangeCellRenderer",valueParser: "Number(newValue)"},
 	{headerName: 'Ask Size', field: 'askSize', sortable: true, filter: true, editable: true, chartDataType: "series",cellRenderer: "agAnimateShowChangeCellRenderer",valueParser: "Number(newValue)"},
-	{headerName: 'Last Updated Volume', field: 'lastUpdated', sortable: true, filter: true, editable: true , chartDataType: "series",cellRenderer: "agAnimateShowChangeCellRenderer",valueParser: "Number(newValue)"},
-	{headerName: 'Last Sale Size', field: 'lastSaleSize', sortable: true, filter: true, editable: true, chartDataType: "series"},
 	{headerName: 'Volume', field: 'volume', sortable: true, filter: true, editable: true, chartDataType: "series",cellRenderer: "agAnimateShowChangeCellRenderer",valueParser: "Number(newValue)"},
-	{headerName: 'Market Percent', field: 'marketPercent', sortable: true, filter: true, editable: true, chartDataType: "series"}
+	{headerName: 'Last Updated Volume', field: 'lastUpdated', sortable: true, filter: true, editable: true , chartDataType: "series",cellRenderer: "agAnimateShowChangeCellRenderer",valueParser: "Number(newValue)"},
+	{headerName: 'Last Sale Size', field: 'lastSaleSize', sortable: true, filter: true, editable: true, chartDataType: "series"},	
+	{headerName: 'Market Percent', field: 'marketPercent', sortable: true, filter: true, editable: true, chartDataType: "series"},
+	{headerName: 'Sector', field: 'sector', sortable: true, filter: true, editable: true, chartDataType: "series"},
+	{headerName: 'Security Type', field: 'securityType', sortable: true, filter: true, editable: true, chartDataType: "series"},
 	
 	
 	
@@ -224,13 +226,15 @@ onGridReady(params) {
 
 
  
-  this.http.get("https://api.iextrading.com/1.0/tops").subscribe(data => {
-   this.rowData = Object.values(data);
+  // this.http.get("https://api.iextrading.com/1.0/tops").subscribe(data => {
+   // this.rowData = Object.values(data);
     
-  //this.rowData = data;
+  // //this.rowData = data;
     
   
- });
+ // });
+ 
+  this.rowData = this.http.get('https://api.iextrading.com/1.0/tops');
 
 
  
@@ -341,55 +345,48 @@ onUpdateSomeValues() {
  
 }
 
-
-
-
-
-
-
  // this.columnDefs['bidSize'])
  for (var key in rowNode) {
     console.log(rowNode[key]);
 }
 
-
   
-}
+}//end function
 
-updateBidprice(){
+// updateBidprice(){
 
-  // for (var i = 0; i < 100; i++) {
-  // var row = 100;
-    // var rowNode = this.gridApi.getDisplayedRowAtIndex(1);
-  // rowNode.setDataValue("bidPrice",Math.floor(Math.random() * 10000));
-  // }
+  // // for (var i = 0; i < 100; i++) {
+  // // var row = 100;
+    // // var rowNode = this.gridApi.getDisplayedRowAtIndex(1);
+  // // rowNode.setDataValue("bidPrice",Math.floor(Math.random() * 10000));
+  // // }
 
-   var itemsToUpdate = [];
-   this.http.get("https://api.iextrading.com/1.0/tops").subscribe(data => {
-   this.rowData2 = Object.values(data);
+   // var itemsToUpdate = [];
+   // this.http.get("https://api.iextrading.com/1.0/tops").subscribe(data => {
+   // this.rowData2 = Object.values(data);
    
    
 	
-    this.gridApi.forEachNodeAfterFilterAndSort(function(rowNode,rowData2, index) {
-      if (index >= 500) {
-        return;
-      }
+    // this.gridApi.forEachNodeAfterFilterAndSort(function(rowNode,rowData2, index) {
+      // if (index >= 500) {
+        // return;
+      // }
 	  
-      var data = rowNode.data;
-      //data = rowNode.data;
-	 //console.log(rowNode.data.symbol);
-	  //data.bidPrice = Math.floor(Math.random() * 20000 + 20000);
-	  data.bidPrice = rowData2.symbol;
-      itemsToUpdate.push(data);
-    });
-    var res = this.gridApi.updateRowData({ update: itemsToUpdate });
+      // var data = rowNode.data;
+      // //data = rowNode.data;
+	 // //console.log(rowNode.data.symbol);
+	  // //data.bidPrice = Math.floor(Math.random() * 20000 + 20000);
+	  // data.bidPrice = rowData2.symbol;
+      // itemsToUpdate.push(data);
+    // });
+    // var res = this.gridApi.updateRowData({ update: itemsToUpdate });
    
    
    
-    });
+    // });
 	
-	// var rowNode = this.gridApi.getDisplayedRowAtIndex(0);
-  //  rowNode.setData(this.rowData2);
+	// // var rowNode = this.gridApi.getDisplayedRowAtIndex(0);
+  // //  rowNode.setData(this.rowData2);
 	
   
    
@@ -398,7 +395,7 @@ updateBidprice(){
     
  
 	
-}
+// }
 	
 
 
@@ -423,18 +420,63 @@ updateBidprice(){
 	
 // });
 
- 
+ 	
+	
+	 SetRandomData() {
 
 
+    var rowCount = this.gridApi.getDisplayedRowCount();//8869
+    for (var i = 0; i < 11; i++) {
+      // var row = Math.floor(10 * rowCount);//a random number
+      var rowNode = this.gridApi.getDisplayedRowAtIndex(i);//object object, Returns the displayed rowNode at the given index.
+      rowNode.setDataValue("bidPrice", Math.floor(Math.random() * 10000));
 
- ProjectDetails(stock){
-		var rowNode = this.gridApi.getDisplayedRowAtIndex(0);
-		rowNode.setDataValue("bidPrice", stock.bidPrice);
-		console.log(stock.bidPrice);
+      //console.log(rowNode);
+
+      // console.log("row count is "+rowCount);
+      // console.log("row is "+row);
+      // console.log("rownode is "+ rowNode)
+
+    }
+
+  }
+	
+
+transactionUpdate() {
+  this.rowData2 = this.http.get('https://api.iextrading.com/1.0/tops');
+   var itemsToUpdate = [];
+var gridApi1 = this.gridApi;
+  this.rowData2.forEach(function (value) {
+
+var gridApi2 = gridApi1;
+
+    //console.log(value);//array with all stockmarket values
+
+    for (var i in value) {
 		
-	}
+		
+    
+var rowNode = gridApi2.getDisplayedRowAtIndex(i);
 
+var data = rowNode.data;
+	  
+     // data.bidPrice = value[i]["bidPrice"];
+	 // data.bidSize = value[i]["bidSize"];
+	//  data.askPrice = value[i]["askPrice"];
+	  data.volume = value[i]["volume"];
+	  
+      itemsToUpdate.push(data);
+    
+    }
+	
+	 
 
+  }); //end foreach
+
+  
+this.gridApi.updateRowData({ update: itemsToUpdate });
+
+}//end function
 
 
 
@@ -444,6 +486,10 @@ updateBidprice(){
 
 
 }//end class
+
+
+
+
 
 function myFunction(item, index) {
   document.getElementById("demo").innerHTML += index + ":" + item + "<br>"; 
@@ -599,7 +645,7 @@ var offsetTime = usaOffset * 60 * 1000; //in ms
   document.getElementById("timer").innerHTML = "NASDAQ will close in "  + hours + "h "
   + minutes + "m " + seconds + "s " + "if 2";
   
-    
+   
   
 }, 1000);
    

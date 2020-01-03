@@ -122,6 +122,7 @@ rowNode.setDataValue("price", value[i]["price"]);
   this.rowData2 = this.http.get('https://api.iextrading.com/1.0/tops/last');
    var itemsToUpdate = [];
 var gridApi1 = this.gridApi;
+console.log(this.rowData2);
   this.rowData2.forEach(function (value) {
 
 var gridApi2 = gridApi1;
