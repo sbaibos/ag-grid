@@ -33,6 +33,7 @@ export class StockExchangeLiveComponent implements OnInit {
   private newData:any[];
   private stock:any;
   private rowData2: any;
+  private transactionInterval;
 	@ViewChild('agGrid') agGrid: AgGridAngular;
   title = 'Stock Exchange';
   currentDate = new Date();
@@ -52,12 +53,11 @@ constructor(private http: HttpClient) {
 	this.columnDefs = [
 
    {headerName: 'Symbol', field: 'symbol', sortable: true, filter: true, chartDataType: "category" },
-  
+  {headerName: 'Volume', field: 'volume', sortable: true, filter: true, editable: true, chartDataType: "series",cellRenderer: "agAnimateShowChangeCellRenderer",valueParser: "Number(newValue)"},
 	{headerName: 'Bid Price', field: 'bidPrice', sortable: true, filter: true, editable: true, chartDataType: "series",cellRenderer: "agAnimateShowChangeCellRenderer", valueParser: "Number(newValue)"},
 	{headerName: 'Bid Size', field: 'bidSize', sortable: true, filter: true, editable: true, chartDataType: "series",cellRenderer: "agAnimateShowChangeCellRenderer",valueParser: "Number(newValue)"},
 	{headerName: 'Ask Price', field: 'askPrice', sortable: true, filter: true, editable: true, chartDataType: "series",cellRenderer: "agAnimateShowChangeCellRenderer",valueParser: "Number(newValue)"},
-	{headerName: 'Ask Size', field: 'askSize', sortable: true, filter: true, editable: true, chartDataType: "series",cellRenderer: "agAnimateShowChangeCellRenderer",valueParser: "Number(newValue)"},
-	{headerName: 'Volume', field: 'volume', sortable: true, filter: true, editable: true, chartDataType: "series",cellRenderer: "agAnimateShowChangeCellRenderer",valueParser: "Number(newValue)"},
+	{headerName: 'Ask Size', field: 'askSize', sortable: true, filter: true, editable: true, chartDataType: "series",cellRenderer: "agAnimateShowChangeCellRenderer",valueParser: "Number(newValue)"},	
 	{headerName: 'Last Updated Volume', field: 'lastUpdated', sortable: true, filter: true, editable: true , chartDataType: "series",cellRenderer: "agAnimateShowChangeCellRenderer",valueParser: "Number(newValue)"},
 	{headerName: 'Last Sale Size', field: 'lastSaleSize', sortable: true, filter: true, editable: true, chartDataType: "series"},	
 	{headerName: 'Market Percent', field: 'marketPercent', sortable: true, filter: true, editable: true, chartDataType: "series"},
@@ -463,7 +463,10 @@ var data = rowNode.data;
      // data.bidPrice = value[i]["bidPrice"];
 	 // data.bidSize = value[i]["bidSize"];
 	//  data.askPrice = value[i]["askPrice"];
+	  data.bidPrice = value[i]["bidPrice"];
 	  data.volume = value[i]["volume"];
+	  data.volume = value[i]["bidSize"];
+	  data.volume = value[i]["askPrice"];
 	  
       itemsToUpdate.push(data);
     
@@ -478,7 +481,27 @@ this.gridApi.updateRowData({ update: itemsToUpdate });
 
 }//end function
 
+ startAlert(){
+	   window.alert("transaction update started");
+	    this.transactionInterval = setInterval(()=> {
+	
 
+this.transactionUpdate();
+
+
+
+}, 3000);
+
+
+
+	
+}//end start alert interval
+
+stopAlert(){
+
+	clearInterval(this.transactionInterval);
+	window.alert("transaction update stoped");
+}
 
 
 

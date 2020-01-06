@@ -114,15 +114,17 @@ onGridReady(params) {
 			}
 			});
 	
-console.log(arrayPrice2);
+//console.log(arrayPrice2);
 		
 	this.gridApi.forEachNodeAfterFilterAndSort(function(rowNode, index) {
 		 
       if (index >= 1) {
         return;
       }
+	 // console.log(arrayPrice2);
 	    var data = rowNode.data;//loop each array
-	 		 //data.price = arrayPrice2[price];
+				console.log(arrayPrice2[index]);//<---------doesnt loop but arrayPrice does
+	 		 //data.price = arrayPrice2[index];
 			//console.log(arrayPrice2);
     	 	  
       itemsToUpdate.push(data);//array of 10 arrays

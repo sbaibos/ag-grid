@@ -105,8 +105,8 @@ export class StockMarketsComponent implements OnInit {
   // }
 
 
-  getSelectedRows() {
-    const selectedRow = this.gridApi.getSelectedRows();
+  updateSelected() {
+    var selectedRow = this.gridApi.getSelectedRows();
     console.log(selectedRow);
     //debugger;
     // console.log(this.agGrid);
