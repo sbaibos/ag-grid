@@ -14,6 +14,8 @@ export class StockExchangeComponent implements OnInit {
    private gridApi;
   private gridColumnApi;
   private rowData2: any;
+   private transactionInterval;
+   
   
 	@ViewChild('agGrid') agGrid: AgGridAngular;
   title = 'Stock Exchange';
@@ -22,7 +24,7 @@ export class StockExchangeComponent implements OnInit {
 
   columnDefs = [
     {headerName: 'Symbol', field: 'symbol', sortable: true, filter: true, chartDataType: "category" },
-   {headerName: 'Price', field: 'price', sortable: true, filter: true, editable: true, chartDataType: "series",cellRenderer: "agAnimateShowChangeCellRenderer", valueParser: "Number(newValue)" },
+   {headerName: 'Price', field: 'price', sortable: true, filter: true, editable: true, chartDataType: "series",cellRenderer: "agAnimateShowChangeCellRenderer", valueParser: "Number(newValue)",valueFormatter: CurrencyCellRenderer },
    {headerName: 'Size', field: 'size', sortable: true, filter: true, editable: true, chartDataType: "series",cellRenderer: "agAnimateShowChangeCellRenderer", valueParser: "Number(newValue)" },
    {headerName: 'Time', field: 'time', sortable: true, filter: true, chartDataType: "excluded"},
   
@@ -49,32 +51,36 @@ onGridReady(params) {
     this.gridApi = params.api;
   
   }
+  
+  
 
 
 
-updateColumn() {
-  this.rowData2 = this.http.get('https://api.iextrading.com/1.0/tops/last');
+// updateColumn() {
+  // this.rowData2 = this.http.get('https://api.iextrading.com/1.0/tops/last');
    
-var gridApi1 = this.gridApi;
-  this.rowData2.forEach(function (value) {
+// var gridApi1 = this.gridApi;
+  // this.rowData2.forEach(function (value) {
 
-var gridApi2 = gridApi1;
+// var gridApi2 = gridApi1;
 
-    //console.log(value);//array with all stockmarket values
+    // //console.log(value);//array with all stockmarket values
 
-    for (var i in value) {
+    // for (var i in value) {
+		
+		
+	    
+// var rowNode = gridApi2.getDisplayedRowAtIndex(i);
+// rowNode.setDataValue("price", value[i]["price"]);
+// //rowNode.setDataValue("size", value[i]["size"]);
+
     
-var rowNode = gridApi2.getDisplayedRowAtIndex(i);
-rowNode.setDataValue("price", value[i]["price"]);
-//rowNode.setDataValue("size", value[i]["size"]);
+    // }
 
-    
-    }
-
-  }); //end foreach
+  // }); //end foreach
 
 
-}//end update column 
+// }//end update column 
 
 
  SetRandomData() {
@@ -91,38 +97,52 @@ rowNode.setDataValue("price", value[i]["price"]);
       // console.log("row count is "+rowCount);
       // console.log("row is "+row);
       // console.log("rownode is "+ rowNode)
-
     }
-
   }
-
-  // transactionUpdate2() {
-	      // var itemsToUpdate = [];
-    // this.gridApi.forEachNodeAfterFilterAndSort(function(rowNode, index) {
+  
+  transactionUpdate2() {
+		 var rowData2 = this.http.get('https://api.iextrading.com/1.0/tops/last');
+    var itemsToUpdate = [];
+	var arrayPrice2=[];
+	var arrayPrice = [ 12,13,14,15,19];
+	
+	rowData2.forEach(function (value) {
+			
+			for(var i in value){
+			//console.log(value[i]["price"]); //all price values
+			arrayPrice2.push(value[i]["price"]);
+			}
+			});
+	
+console.log(arrayPrice2);
+		
+	this.gridApi.forEachNodeAfterFilterAndSort(function(rowNode, index) {
 		 
-      // if (index >= 5) {
-        // return;
-      // }
-	 
-      // var data = rowNode.data;
-	  
-      // data.price = Math.floor(Math.random() * 20000 + 20000);
-	  
-      // itemsToUpdate.push(data);
-	  
-	  
-    // });
-    // this.gridApi.updateRowData({ update: itemsToUpdate });
-   
-  // }
+      if (index >= 1) {
+        return;
+      }
+	    var data = rowNode.data;//loop each array
+	 		 //data.price = arrayPrice2[price];
+			//console.log(arrayPrice2);
+    	 	  
+      itemsToUpdate.push(data);//array of 10 arrays
+		  
+    });
+    this.gridApi.updateRowData({ update: itemsToUpdate });
+	  	
+  }//end get rowdata
   
   
   
-  transactionUpdate() {
+ 
+  
+  
+  
+transactionUpdate() {
   this.rowData2 = this.http.get('https://api.iextrading.com/1.0/tops/last');
    var itemsToUpdate = [];
 var gridApi1 = this.gridApi;
-console.log(this.rowData2);
+
   this.rowData2.forEach(function (value) {
 
 var gridApi2 = gridApi1;
@@ -149,12 +169,45 @@ var data = rowNode.data;
 this.gridApi.updateRowData({ update: itemsToUpdate });
 }//end function
   
-   
-   
+  
+   startAlert(){
+	   window.alert("transaction update started");
+	    this.transactionInterval = setInterval(()=> {
+	
+
+this.transactionUpdate();
+
+
+
+}, 3000);
+
+
+
+	
+}//end start alert interval
+
+stopAlert(){
+
+	clearInterval(this.transactionInterval);
+	window.alert("transaction update stoped");
+}
 
  
 
 
   
 
+}//end class
+
+function CurrencyCellRenderer(params:any) {
+
+    var usdFormate = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 2
+    });
+    return usdFormate.format(params.value);
 }
+
+
+

@@ -22,26 +22,20 @@ export class StockMarketsComponent implements OnInit {
   @ViewChild('agGrid') agGrid: AgGridAngular;
   title = 'Stock Markets';
 
-  // autoGroupColumnDef = {
-  // headerName: 'Name',
-  // field: 'name',
-  // cellRenderer: 'agGroupCellRenderer',
-  // cellRendererParams: {
-  // checkbox: true
-  // }
-  // };
+  
 
   columnDefs = [
-    { headerName: 'Name', field: 'name', sortable: true, filter: true, checkboxSelection: true, rowGroup: true, hide: true, chartDataType: "excluded" },
+    { headerName: 'Name', field: 'name', sortable: true, filter: true, checkboxSelection: true, rowGroup: true, hide: true, chartDataType: "category" },
+	{ headerName: 'Volume', field: 'volume', sortable: true, filter: true, editable: true, chartDataType: "series",valueFormatter: CurrencyCellRenderer, aggFunc: "sum"},
     { headerName: 'Date', field: 'date', sortable: true, filter: true, editable: true, chartDataType: "category" },
-    { headerName: 'Open', field: 'open', sortable: true, filter: true, editable: true, chartDataType: "series", cellRenderer: "agAnimateShowChangeCellRenderer", valueParser: "Number(newValue)" },
+    { headerName: 'Open', field: 'open', sortable: true, filter: true, editable: true, chartDataType: "series", cellRenderer: "agAnimateShowChangeCellRenderer", valueParser: "Number(newValue)"},
     { headerName: 'High', field: 'high', sortable: true, filter: true, editable: true, chartDataType: "series" },
     { headerName: 'Low', field: 'low', sortable: true, filter: true, editable: true, chartDataType: "series" },
-    { headerName: 'Close', field: 'close', sortable: true, filter: true, editable: true, chartDataType: "series" },
-    { headerName: 'Volume', field: 'volume', sortable: true, filter: true, editable: true, chartDataType: "series" },
-    { headerName: 'Adjusted Volume', field: 'adj_volume', sortable: true, filter: true, editable: true, chartDataType: "series" },
-    { headerName: 'Adjusted High', field: 'adj_high', sortable: true, filter: true, editable: true, chartDataType: "series" },
-    { headerName: 'Adjusted low', field: 'adj_low', sortable: true, filter: true, editable: true, chartDataType: "series" }
+    { headerName: 'Close', field: 'close', sortable: true, filter: true, editable: true, chartDataType: "series"},
+    
+    { headerName: 'Adjusted Volume', field: 'adj_volume', sortable: true, filter: true, editable: true, chartDataType: "series",valueFormatter: CurrencyCellRenderer, aggFunc: "avg" },
+    { headerName: 'Adjusted High', field: 'adj_high', sortable: true, filter: true, editable: true, chartDataType: "series",aggFunc: "avg" },
+    { headerName: 'Adjusted low', field: 'adj_low', sortable: true, filter: true, editable: true, chartDataType: "series",aggFunc: "avg" }
 
 
 
@@ -57,13 +51,27 @@ export class StockMarketsComponent implements OnInit {
 	
 	 this.autoGroupColumnDef = {
       headerName: "Name",
-      field: "name",
+      field: "",
       width: 200,
-      cellRenderer: "agGroupCellRenderer",
-      cellRendererParams: { checkbox: true }
+      cellRenderer: "agGroupCellRenderer"
+	  // cellRendererParams: { checkbox: true }
+     
     };
+	
+			
   }
   //baseUrl = environment.baseUrl;
+  
+  
+ 
+    // we set the value cache in the function createGrid below
+    // valueCache = true / false;
+    
+    
+
+  
+  
+  
 
   ngOnInit() {
     //this.rowData = this.http.get('http://sbaibos.com/sotostheme/api/grid_api/objects/readStock.php');
@@ -138,27 +146,9 @@ export class StockMarketsComponent implements OnInit {
 
   }//end update column 
 
-
-
-  getSelectedRowNode() {
-    var selectedRows = this.gridApi.getSelectedNodes();
-
-    var selectedRowsString = [];
-
-    selectedRows.forEach(function (selectedRow, index) {
-
-      selectedRowsString.push(selectedRow.open);
-    });
-
-   
-    //return selectedRowsString;
-
-    return selectedRows;
-
-
-  }
-
-
+  
+    
+  
 
   SetRandomData() {
 
@@ -182,72 +172,67 @@ export class StockMarketsComponent implements OnInit {
 
 
 
-  setData() {
+  // setData() {
 
-   this.rowData2 = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
+   // this.rowData2 = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
 	
-	var gridApi1 = this.gridApi;
-    this.rowData2.forEach(function (value) {
+	// var gridApi1 = this.gridApi;
+    // this.rowData2.forEach(function (value) {
 
-	var gridApi2 = gridApi1;
+	// var gridApi2 = gridApi1;
 
-      //console.log(value);//array with all stockmarket values
+      // //console.log(value);//array with all stockmarket values
 
-      for (var i in value) {
+      // for (var i in value) {
 		  
- var rowNode = gridApi2.getDisplayedRowAtIndex(i);
-       
-var newData  = {
-        open: value[i]["open"],
-        close: value[i]["close"]
-      };
+ // var rowNode = gridApi2.getDisplayedRowAtIndex(i);
+        
+// var newData  = {
+        // open: value[i]["open"],
+        // close: value[i]["close"]
+      // };
 	  
-	  rowNode.setData(newData);
-      }
+	  // rowNode.setData(newData);
+      // }
 
-    }); //end foreach
+    // }); //end foreach
 	 
      
-	
-	 
-	   
-	
-
-	
-	
-
-     
-
-  }//end set data
+  // }//end set data
 
 
- setData2() {
+ // setData2() {
   
-for (var i = 0; i < 3; i++) {
-   var array1 = [1,2,3,4];//array  1,2,3,4
-   var array2 = [5,6,7,8];
-      var rowNode = this.gridApi.getDisplayedRowAtIndex(i);
+// for (var i = 0; i < 3; i++) {
+   // var array1 = [1,2,3,4];//array  1,2,3,4
+   // var array2 = [5,6,7,8];
+      // var rowNode = this.gridApi.getDisplayedRowAtIndex(i);
 
        
     
-       var openValues = array1[i];//array  values
-      var closeValues = array2[i];
-	  console.log(openValues);
-    var newData = {
-        open: openValues,
-      high: closeValues
-    };
-rowNode.setData(newData);
-      }//end for
+       // var openValues = array1[i];//array  values
+      // var closeValues = array2[i];
+	  // console.log(openValues);
+    // var newData = {
+        // open: openValues,
+      // high: closeValues
+    // };
+// rowNode.setData(newData);
+      // }//end for
 	  
-   }//end set data 2
+   // }//end set data 2
 
 
 
+}//end class
 
+function CurrencyCellRenderer(params:any) {
 
-
-
- 
-
+    var usdFormate = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 2
+    });
+    return usdFormate.format(params.value);
 }
+
