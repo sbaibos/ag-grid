@@ -8,10 +8,10 @@ import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
  { path: '', component: HomeComponent},
-  { path: 'home', component: HomeComponent},
-// { path: 'stock-exchange-live', component: StockExchangeLiveComponent, canActivate: [AuthGuard]},
- // { path: 'stock-exchange', component: StockExchangeComponent, canActivate: [AuthGuard]},
- // { path: 'stock-markets', component: StockMarketsComponent, canActivate: [AuthGuard] },
+ { path: 'home', component: HomeComponent},
+ { path: 'stock-exchange-live', component: StockExchangeLiveComponent, canActivate: [AuthGuard]},
+  { path: 'stock-exchange', component: StockExchangeComponent, canActivate: [AuthGuard]},
+  { path: 'stock-markets', component: StockMarketsComponent, canActivate: [AuthGuard] },
  { path: 'stock-exchange-live', component: StockExchangeLiveComponent },
  { path: 'stock-exchange', component: StockExchangeComponent },
  { path: 'stock-markets', component: StockMarketsComponent },

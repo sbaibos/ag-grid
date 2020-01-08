@@ -1,10 +1,9 @@
 <p>
   stock-markets page
 </p>
- <button (click)="updateSelected()">update selected rows</button>
+ <!-- <button (click)="updateSelected()">update selected rows</button> -->
 
-
- <!-- <button (click)="setData()">setData</button> -->
+ <button (click)="refresh()">Refresh</button>
  
  
  
@@ -24,6 +23,7 @@
     [rowSelection]="rowSelection"
 	[groupSelectsChildren]="true"
 	 (selectionChanged)="getSelectedRowNode($event)"
+	 [groupSelectsChildren]="true"
   
    (gridReady)="onGridReady($event)"
   >

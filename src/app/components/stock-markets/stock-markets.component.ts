@@ -18,6 +18,7 @@ export class StockMarketsComponent implements OnInit {
   private rowData2: any;
   private rowSelection;
   private autoGroupColumnDef;
+  private transactionInterval;
 
   @ViewChild('agGrid') agGrid: AgGridAngular;
   title = 'Stock Markets';
@@ -26,16 +27,16 @@ export class StockMarketsComponent implements OnInit {
 
   columnDefs = [
     { headerName: 'Name', field: 'name', sortable: true, filter: true, checkboxSelection: true, rowGroup: true, hide: true, chartDataType: "category" },
-	{ headerName: 'Volume', field: 'volume', sortable: true, filter: true, editable: true, chartDataType: "series",valueFormatter: CurrencyCellRenderer, aggFunc: "sum"},
+	{ headerName: 'Volume', field: 'volume', sortable: true, filter: true, editable: true, chartDataType: "series",valueFormatter: CurrencyCellRenderer, aggFunc: "sum", valueParser: "Number(newValue)", cellRenderer: "agAnimateShowChangeCellRenderer"},
     { headerName: 'Date', field: 'date', sortable: true, filter: true, editable: true, chartDataType: "category" },
     { headerName: 'Open', field: 'open', sortable: true, filter: true, editable: true, chartDataType: "series", cellRenderer: "agAnimateShowChangeCellRenderer", valueParser: "Number(newValue)"},
-    { headerName: 'High', field: 'high', sortable: true, filter: true, editable: true, chartDataType: "series" },
-    { headerName: 'Low', field: 'low', sortable: true, filter: true, editable: true, chartDataType: "series" },
-    { headerName: 'Close', field: 'close', sortable: true, filter: true, editable: true, chartDataType: "series"},
+    { headerName: 'High', field: 'high', sortable: true, filter: true, editable: true, chartDataType: "series", valueParser: "Number(newValue)", cellRenderer: "agAnimateShowChangeCellRenderer" },
+    { headerName: 'Low', field: 'low', sortable: true, filter: true, editable: true, chartDataType: "series", valueParser: "Number(newValue)", cellRenderer: "agAnimateShowChangeCellRenderer" },
+    { headerName: 'Close', field: 'close', sortable: true, filter: true, editable: true, chartDataType: "series", valueParser: "Number(newValue)", cellRenderer: "agAnimateShowChangeCellRenderer"},
     
-    { headerName: 'Adjusted Volume', field: 'adj_volume', sortable: true, filter: true, editable: true, chartDataType: "series",valueFormatter: CurrencyCellRenderer, aggFunc: "avg" },
-    { headerName: 'Adjusted High', field: 'adj_high', sortable: true, filter: true, editable: true, chartDataType: "series",aggFunc: "avg" },
-    { headerName: 'Adjusted low', field: 'adj_low', sortable: true, filter: true, editable: true, chartDataType: "series",aggFunc: "avg" }
+    { headerName: 'Adjusted Volume', field: 'adj_volume', sortable: true, filter: true, editable: true, chartDataType: "series",valueFormatter: CurrencyCellRenderer, aggFunc: "avg", valueParser: "Number(newValue)", cellRenderer: "agAnimateShowChangeCellRenderer" },
+    { headerName: 'Adjusted High', field: 'adj_high', sortable: true, filter: true, editable: true, chartDataType: "series",aggFunc: "avg", valueParser: "Number(newValue)", cellRenderer: "agAnimateShowChangeCellRenderer" },
+    { headerName: 'Adjusted low', field: 'adj_low', sortable: true, filter: true, editable: true, chartDataType: "series",aggFunc: "avg", valueParser: "Number(newValue)", cellRenderer: "agAnimateShowChangeCellRenderer" }
 
 
 
@@ -53,8 +54,8 @@ export class StockMarketsComponent implements OnInit {
       headerName: "Name",
       field: "",
       width: 200,
-      cellRenderer: "agGroupCellRenderer"
-	  // cellRendererParams: { checkbox: true }
+      cellRenderer: "agGroupCellRenderer",
+	  cellRendererParams: { checkbox: true }
      
     };
 	
@@ -74,10 +75,11 @@ export class StockMarketsComponent implements OnInit {
   
 
   ngOnInit() {
-    //this.rowData = this.http.get('http://sbaibos.com/sotostheme/api/grid_api/objects/readStock.php');
+   this.rowData = this.http.get('http://sbaibos.com/sotostheme/api/grid_api/objects/readStock.php');
+	// this.rowData = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
     //this.rowData = this.http.get(this.baseUrl);
     //this.rowData = this.http.get('https://api.myjson.com/bins/15psn9');
-    this.rowData = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
+  
     // this.rowData = this.http.get('https://api.myjson.com/bins/ly7d1');
 
 
@@ -124,27 +126,27 @@ export class StockMarketsComponent implements OnInit {
   }
 
 
-  updateColumn() {
-    this.rowData2 = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
+  // updateColumn() {
+    // this.rowData2 = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
      
-	var gridApi1 = this.gridApi;
-    this.rowData2.forEach(function (value) {
+	// var gridApi1 = this.gridApi;
+    // this.rowData2.forEach(function (value) {
 
-	var gridApi2 = gridApi1;
+	// var gridApi2 = gridApi1;
 
-      //console.log(value);//array with all stockmarket values
-
-      for (var i in value) {
-		  
- var rowNode = gridApi2.getDisplayedRowAtIndex(i);
-  rowNode.setDataValue("open", value[i]["open"]);
+      // //console.log(value);//array with all stockmarket values
+// console.log(value.length);
+     // // for (var i in value) {
+	 
+ // var rowNode = gridApi2.getDisplayedRowAtIndex(i);
+  // rowNode.setDataValue("open", value[i]["open"]);
       
-      }
+      // }
 
-    }); //end foreach
+    // }); //end foreach
 
 
-  }//end update column 
+  // }//end update column 
 
   
     
@@ -168,6 +170,44 @@ export class StockMarketsComponent implements OnInit {
     }
 
   }
+  
+  
+  // transactionUpdate() {
+  // this.rowData2 = this.http.get('https://api.iextrading.com/1.0/tops/last');
+   // var itemsToUpdate = [];
+// var gridApi1 = this.gridApi;
+
+  // this.rowData2.forEach(function (value) {
+
+// var gridApi2 = gridApi1;
+
+    // //console.log(value);//array with all stockmarket values
+
+    // for (var i in value) {
+    
+// var rowNode = gridApi2.getDisplayedRowAtIndex(i);
+
+// var data = rowNode.data;
+	  
+      // data.openg = value[i]["open"];
+	  
+      // itemsToUpdate.push(data);
+    
+    // }
+	
+	 
+
+  // }); //end foreach
+
+  
+// this.gridApi.updateRowData({ update: itemsToUpdate });
+// }//end function
+  
+  
+  
+
+  
+  
 
 
 
@@ -222,7 +262,11 @@ export class StockMarketsComponent implements OnInit {
 	  
    // }//end set data 2
 
-
+refresh(){
+	//this.rowData = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
+	 this.rowData = this.http.get('http://sbaibos.com/sotostheme/api/grid_api/objects/readStock.php');
+	
+}
 
 }//end class
 
