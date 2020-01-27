@@ -666,7 +666,7 @@ var offsetTime = usaOffset * 60 * 1000; //in ms
 
   // Output the result in an element with id="demo"
   document.getElementById("timer").innerHTML = "NASDAQ will close in "  + hours + "h "
-  + minutes + "m " + seconds + "s " + "if 2";
+  + minutes + "m " + seconds + "s ";
   
    
   
@@ -719,7 +719,7 @@ var nowMs = now.getTime();
 
   // Output the result in an element with id="demo"
   document.getElementById("timer").innerHTML = "NASDAQ will open in "  + hours + "h "
-  + minutes + "m " + seconds + "s " + "if 3";
+  + minutes + "m " + seconds + "s ";
   
     
   

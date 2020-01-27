@@ -28,7 +28,7 @@ export class StockMarketsComponent implements OnInit {
   columnDefs = [
     { headerName: 'Name', field: 'name', sortable: true, filter: true, checkboxSelection: true, rowGroup: true, hide: true, chartDataType: "category" },
 	{ headerName: 'Volume', field: 'volume', sortable: true, filter: true, editable: true, chartDataType: "series",valueFormatter: CurrencyCellRenderer, aggFunc: "sum", valueParser: "Number(newValue)", cellRenderer: "agAnimateShowChangeCellRenderer"},
-    { headerName: 'Date', field: 'date', sortable: true, filter: true, editable: true, chartDataType: "category" },
+    { headerName: 'Date', field: 'date', sortable: true, filter: true, editable: true, chartDataType: "category",valueParser: "String(newValue)"},
     { headerName: 'Open', field: 'open', sortable: true, filter: true, editable: true, chartDataType: "series", cellRenderer: "agAnimateShowChangeCellRenderer", valueParser: "Number(newValue)"},
     { headerName: 'High', field: 'high', sortable: true, filter: true, editable: true, chartDataType: "series", valueParser: "Number(newValue)", cellRenderer: "agAnimateShowChangeCellRenderer" },
     { headerName: 'Low', field: 'low', sortable: true, filter: true, editable: true, chartDataType: "series", valueParser: "Number(newValue)", cellRenderer: "agAnimateShowChangeCellRenderer" },
@@ -75,8 +75,8 @@ export class StockMarketsComponent implements OnInit {
   
 
   ngOnInit() {
-   this.rowData = this.http.get('http://sbaibos.com/sotostheme/api/grid_api/objects/readStock.php');
-	// this.rowData = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
+  // this.rowData = this.http.get('http://sbaibos.com/sotostheme/api/grid_api/objects/readStock.php');
+	 this.rowData = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
     //this.rowData = this.http.get(this.baseUrl);
     //this.rowData = this.http.get('https://api.myjson.com/bins/15psn9');
   
@@ -110,6 +110,10 @@ export class StockMarketsComponent implements OnInit {
   updateSelected() {
     var selectedRow = this.gridApi.getSelectedRows();
     console.log(selectedRow);
+	var id=10;
+	return this.http.put<any>('http://localhost/websites/grid_api/objects/updateStock.php' + '?id=' + id,selectedRow).subscribe(data => {
+    id = data.id;
+});
     //debugger;
     // console.log(this.agGrid);
     // const selectedNodes = this.agGrid.api.getSelectedNodes(); debugger;
@@ -263,8 +267,8 @@ export class StockMarketsComponent implements OnInit {
    // }//end set data 2
 
 refresh(){
-	//this.rowData = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
-	 this.rowData = this.http.get('http://sbaibos.com/sotostheme/api/grid_api/objects/readStock.php');
+	this.rowData = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
+	// this.rowData = this.http.get('http://sbaibos.com/sotostheme/api/grid_api/objects/readStock.php');
 	
 }
 

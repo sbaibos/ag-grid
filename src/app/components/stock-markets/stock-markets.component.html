@@ -4,7 +4,7 @@
  <!-- <button (click)="updateSelected()">update selected rows</button> -->
 
  <button (click)="refresh()">Refresh</button>
- 
+  <button (click)="updateSelected()">update selected rows</button>
  
  
  
@@ -22,7 +22,7 @@
    [getChartToolbarItems]="getChartToolbarItems"
     [rowSelection]="rowSelection"
 	[groupSelectsChildren]="true"
-	 (selectionChanged)="getSelectedRowNode($event)"
+	
 	 [groupSelectsChildren]="true"
   
    (gridReady)="onGridReady($event)"
