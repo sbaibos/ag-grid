@@ -36,8 +36,8 @@ export class StockMarketsComponent implements OnInit {
     
     { headerName: 'Adjusted Volume', field: 'adj_volume', sortable: true, filter: true, editable: true, chartDataType: "series",valueFormatter: CurrencyCellRenderer, aggFunc: "avg", valueParser: "Number(newValue)", cellRenderer: "agAnimateShowChangeCellRenderer" },
     { headerName: 'Adjusted High', field: 'adj_high', sortable: true, filter: true, editable: true, chartDataType: "series",aggFunc: "avg", valueParser: "Number(newValue)", cellRenderer: "agAnimateShowChangeCellRenderer" },
-    { headerName: 'Adjusted low', field: 'adj_low', sortable: true, filter: true, editable: true, chartDataType: "series",aggFunc: "avg", valueParser: "Number(newValue)", cellRenderer: "agAnimateShowChangeCellRenderer" }
-
+    { headerName: 'Adjusted low', field: 'adj_low', sortable: true, filter: true, editable: true, chartDataType: "series",aggFunc: "avg", valueParser: "Number(newValue)", cellRenderer: "agAnimateShowChangeCellRenderer" },
+	{ headerName: 'Id', field: 'id', sortable: true, filter: true, editable: true, valueParser: "Number(newValue)",hide: true}
 
 
   ];
@@ -110,8 +110,12 @@ export class StockMarketsComponent implements OnInit {
   updateSelected() {
     var selectedRow = this.gridApi.getSelectedRows();
     console.log(selectedRow);
-	var id=10;
-	return this.http.put<any>('http://localhost/websites/grid_api/objects/updateStock.php' + '?id=' + id,selectedRow).subscribe(data => {
+	var id='';
+	// return this.http.put<any>('http://localhost/websites/grid_api/objects/updateStock.php' + '?id=' + id,selectedRow).subscribe(data => {
+    // id = data.id;
+// });
+
+return this.http.put<any>('http://localhost/websites/grid_api/objects/updateStock.php',selectedRow).subscribe(data => {
     id = data.id;
 });
     //debugger;
