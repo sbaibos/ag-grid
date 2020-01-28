@@ -75,8 +75,8 @@ export class StockMarketsComponent implements OnInit {
   
 
   ngOnInit() {
-  // this.rowData = this.http.get('http://sbaibos.com/sotostheme/api/grid_api/objects/readStock.php');
-	 this.rowData = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
+   this.rowData = this.http.get('http://sbaibos.com/sotostheme/api/grid_api/objects/readStock.php');
+	// this.rowData = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
     //this.rowData = this.http.get(this.baseUrl);
     //this.rowData = this.http.get('https://api.myjson.com/bins/15psn9');
   
@@ -111,13 +111,14 @@ export class StockMarketsComponent implements OnInit {
     var selectedRow = this.gridApi.getSelectedRows();
     console.log(selectedRow);
 	var id='';
-	// return this.http.put<any>('http://localhost/websites/grid_api/objects/updateStock.php' + '?id=' + id,selectedRow).subscribe(data => {
-    // id = data.id;
-// });
 
-return this.http.put<any>('http://localhost/websites/grid_api/objects/updateStock.php',selectedRow).subscribe(data => {
+  return this.http.put<any>('http://sbaibos.com/sotostheme/api/grid_api/objects/updateStock.php',selectedRow).subscribe(data => {
     id = data.id;
 });
+
+// return this.http.put<any>('http://localhost/websites/grid_api/objects/updateStock.php',selectedRow).subscribe(data => {
+//     id = data.id;
+// });
     //debugger;
     // console.log(this.agGrid);
     // const selectedNodes = this.agGrid.api.getSelectedNodes(); debugger;
@@ -134,30 +135,7 @@ return this.http.put<any>('http://localhost/websites/grid_api/objects/updateStoc
   }
 
 
-  // updateColumn() {
-    // this.rowData2 = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
-     
-	// var gridApi1 = this.gridApi;
-    // this.rowData2.forEach(function (value) {
-
-	// var gridApi2 = gridApi1;
-
-      // //console.log(value);//array with all stockmarket values
-// console.log(value.length);
-     // // for (var i in value) {
-	 
- // var rowNode = gridApi2.getDisplayedRowAtIndex(i);
-  // rowNode.setDataValue("open", value[i]["open"]);
-      
-      // }
-
-    // }); //end foreach
-
-
-  // }//end update column 
-
   
-    
   
 
   SetRandomData() {
@@ -271,8 +249,8 @@ return this.http.put<any>('http://localhost/websites/grid_api/objects/updateStoc
    // }//end set data 2
 
 refresh(){
-	this.rowData = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
-	// this.rowData = this.http.get('http://sbaibos.com/sotostheme/api/grid_api/objects/readStock.php');
+	//this.rowData = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
+	 this.rowData = this.http.get('http://sbaibos.com/sotostheme/api/grid_api/objects/readStock.php');
 	
 }
 
