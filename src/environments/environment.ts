@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   baseUrl  : "http://localhost/websites/grid_api/objects/readStock.php",
  // authUrl : "http://localhost/websites/angularGrid/"
-  authUrl : "http://localhost:4200"
+  redirectUri : "http://localhost:4200",
+  updateUrl :"http://localhost/websites/grid_api/objects/updateStock.php"
 };
 
 /*

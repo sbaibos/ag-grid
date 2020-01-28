@@ -5,21 +5,22 @@
 
  <button (click)="refresh()">Refresh</button>
   <button (click)="updateSelected()">update selected rows</button>
- 
- 
+ <!--  [autoGroupColumnDef]="autoGroupColumnDef"
+  [popupParent]="popupParent" 
+  [getChartToolbarItems]="getChartToolbarItems" -->
  
 <ag-grid-angular 
   #agGrid
   style="width: auto; height: 500px;"   
   [pagination]="true"
-  [autoGroupColumnDef]="autoGroupColumnDef"
+  
   class="ag-theme-balham"
   [rowData]="rowData | async" 
   [columnDefs]="columnDefs"
    [enableRangeSelection]="true"
   [enableCharts]="true"
-   [popupParent]="popupParent" 
-   [getChartToolbarItems]="getChartToolbarItems"
+   
+   
     [rowSelection]="rowSelection"
 	[groupSelectsChildren]="true"
 	

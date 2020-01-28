@@ -20,14 +20,14 @@ export class StockExchangeLiveComponent implements OnInit {
   private gridApi;
 	private gridColumnApi;
 	
-	private columnDefs:any[];
+	public columnDefs:any[];
   private defaultColDef;
   private rowSelection;
-  private rowModelType;
+  public rowModelType;
   private getRowNodeId;
   private components;
  // private rowData: any[];
-  private rowData: any;
+  public rowData: any;
     private nasdaqueTime;
   private stockData;
   private newData:any[];

@@ -12,7 +12,7 @@ export class AuthService {
   private _idToken: string;
   private _accessToken: string;
   private _expiresAt: number;
-  authUrl = environment.authUrl;
+  //authUrl = environment.authUrl;
   auth0 = new auth0.WebAuth({
     clientID: 'AddT1U4IxcbNQJ7wMlXWWqTMXh4jeu6W',
     domain: 'dev-eixz1s17.eu.auth0.com',

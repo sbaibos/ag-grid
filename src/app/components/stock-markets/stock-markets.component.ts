@@ -12,11 +12,11 @@ import { GridApi } from 'ag-grid-community';
 })
 export class StockMarketsComponent implements OnInit {
 
-  private rowData: any;
+  public rowData: any;
   private gridApi;
   private gridColumnApi;
   private rowData2: any;
-  private rowSelection;
+  public rowSelection;
   private autoGroupColumnDef;
   private transactionInterval;
 
@@ -61,7 +61,9 @@ export class StockMarketsComponent implements OnInit {
 	
 			
   }
-  //baseUrl = environment.baseUrl;
+  baseUrl = environment.baseUrl;
+  updateUrl = environment.updateUrl;
+  
   
   
  
@@ -75,7 +77,7 @@ export class StockMarketsComponent implements OnInit {
   
 
   ngOnInit() {
-   this.rowData = this.http.get('http://sbaibos.com/sotostheme/api/grid_api/objects/readStock.php');
+   this.rowData = this.http.get(this.baseUrl);
 	// this.rowData = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
     //this.rowData = this.http.get(this.baseUrl);
     //this.rowData = this.http.get('https://api.myjson.com/bins/15psn9');
@@ -112,7 +114,7 @@ export class StockMarketsComponent implements OnInit {
     console.log(selectedRow);
 	var id='';
 
-  return this.http.put<any>('http://sbaibos.com/sotostheme/api/grid_api/objects/updateStock.php',selectedRow).subscribe(data => {
+  return this.http.put<any>(this.updateUrl,selectedRow).subscribe(data => {
     id = data.id;
 });
 
@@ -250,7 +252,7 @@ export class StockMarketsComponent implements OnInit {
 
 refresh(){
 	//this.rowData = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
-	 this.rowData = this.http.get('http://sbaibos.com/sotostheme/api/grid_api/objects/readStock.php');
+	 this.rowData = this.http.get(this.baseUrl);
 	
 }
 
