@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
  import { AgGridAngular } from 'ag-grid-angular';
 import 'ag-grid-enterprise/chartsModule';
 import { GridApi } from 'ag-grid-community';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-stock-exchange',
@@ -26,7 +27,7 @@ export class StockExchangeComponent implements OnInit {
     {headerName: 'Symbol', field: 'symbol', sortable: true, filter: true, chartDataType: "category" },
    {headerName: 'Price', field: 'price', sortable: true, filter: true, editable: true, chartDataType: "series",cellRenderer: "agAnimateShowChangeCellRenderer", valueParser: "Number(newValue)",valueFormatter: CurrencyCellRenderer },
    {headerName: 'Size', field: 'size', sortable: true, filter: true, editable: true, chartDataType: "series",cellRenderer: "agAnimateShowChangeCellRenderer", valueParser: "Number(newValue)" },
-   {headerName: 'Time', field: 'time', sortable: true, filter: true, chartDataType: "excluded"},
+   {headerName: 'Time', field: 'time', sortable: true, filter: true, editable: true,chartDataType: "series",cellRenderer: "agAnimateSlideCellRenderer",valueParser: "Number(newValue)",valueFormatter: dateFormatter,},
   
 	
 	
@@ -158,7 +159,7 @@ var rowNode = gridApi2.getDisplayedRowAtIndex(i);
 var data = rowNode.data;
 	  
       data.price = value[i]["price"];
-	  
+	  data.time = value[i]["time"];
       itemsToUpdate.push(data);
     
     }
@@ -209,6 +210,16 @@ function CurrencyCellRenderer(params:any) {
         minimumFractionDigits: 2
     });
     return usdFormate.format(params.value);
+}
+
+function dateFormatter(params:any) {
+	
+console.log(typeof params.value);
+		
+	
+	var stockDate = new Date(params.value);
+	return stockDate;
+  
 }
 
 
