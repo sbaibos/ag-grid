@@ -256,6 +256,42 @@ refresh(){
 	
 }
 
+ addRow() {
+    var newItem = this.createNewRowData();
+    var res = this.gridApi.updateRowData({ add: [newItem] });
+   // printResult(res);
+  }
+  
+  removeSelected(){
+	   var selectedData = this.gridApi.getSelectedRows();
+	   
+	      
+    var res = this.gridApi.updateRowData({ remove: selectedData });
+	  
+  }
+  
+  createNewRowData() {
+	  var newDate = new Date();
+	  var day = newDate.getUTCDate();
+	  var month = newDate.getMonth();
+	  var year = newDate.getFullYear();
+  var newData = {
+    name: "test" ,
+	volume:0,
+    date: year + "-"+ month+1 +"-"+ day,
+	open:0 ,
+    high: 0,
+    low: 0,
+    close: 0,
+	adj_volume:0,
+	adj_high:0,
+	adj_low:0,
+	id:0
+  };
+ 
+  return newData;
+}
+
 }//end class
 
 function CurrencyCellRenderer(params:any) {
