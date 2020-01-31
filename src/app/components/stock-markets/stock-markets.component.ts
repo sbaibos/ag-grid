@@ -113,6 +113,11 @@ export class StockMarketsComponent implements OnInit {
     var selectedRow = this.gridApi.getSelectedRows();
     console.log(selectedRow);
 	var id='';
+	
+	
+	
+	
+	
 
   return this.http.put<any>(this.updateUrl,selectedRow).subscribe(data => {
     id = data.id;
@@ -264,9 +269,29 @@ refresh(){
   
   removeSelected(){
 	   var selectedData = this.gridApi.getSelectedRows();
+	   console.log(selectedData[0].id);
+	  var gridApi1 = this.gridApi;
+	   selectedData.forEach(function (value) {
+		var gridApi2 = gridApi1;
+		   console.log(value.id);
+		   
+		   if (value.name != "test" ){
+			   
+			   alert("cannot delete row from group" + value.name);
+		   } else if(value.name="test"){
+			   
+			   gridApi2.updateRowData({ remove: selectedData });
+			   
+			  console.log(value);
+		   }
+		   
+	   });
+		   
+		
+	   
 	   
 	      
-    var res = this.gridApi.updateRowData({ remove: selectedData });
+  // 
 	  
   }
   
