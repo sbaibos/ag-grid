@@ -111,28 +111,40 @@ export class StockMarketsComponent implements OnInit {
 
   updateSelected() {
     var selectedRow = this.gridApi.getSelectedRows();
-    console.log(selectedRow);
-	var id='';
+    
 	
-	
-	
-	
-	
-
-  return this.http.put<any>(this.updateUrl,selectedRow).subscribe(data => {
+	 var gridApi1 = this.gridApi;
+	 var updateUrl1 = this.updateUrl;
+	 var that = this;
+	 selectedRow.forEach(function (value) {
+		var gridApi2 = gridApi1;
+		 var updateUrl2 = updateUrl1;
+		 
+		   console.log(value);
+		   
+		   if (value.name != "test" ){
+			   
+			   alert("cannot update row from group" + value.name);
+		   } else if(value.name="test"){
+			   var id='';
+			 return that.http.put(updateUrl2,selectedRow).subscribe(data => {
     id = data.id;
 });
+			   
+			 
+		   }
+		   
+	   });
+	
+	
+	
 
-// return this.http.put<any>('http://localhost/websites/grid_api/objects/updateStock.php',selectedRow).subscribe(data => {
-//     id = data.id;
+  // return this.http.put<any>(this.updateUrl,selectedRow).subscribe(data => {
+    // id = data.id;
 // });
-    //debugger;
-    // console.log(this.agGrid);
-    // const selectedNodes = this.agGrid.api.getSelectedNodes(); debugger;
-    // const selectedData = selectedNodes.map(node => node.data);
-    // const selectedDataStringPresentation = selectedData.map(node => node.make + ' ' + node.model).join(', ');
-    // alert(`Selected nodes: ${selectedDataStringPresentation}`);
-  }
+
+
+  }//end update selected
 
 
 
