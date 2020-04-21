@@ -19,6 +19,7 @@ export class StockMarketsComponent implements OnInit {
   public rowSelection;
   private autoGroupColumnDef;
   private transactionInterval;
+   private postUrl = environment.postUrl;
 
   @ViewChild('agGrid') agGrid: AgGridAngular;
   title = 'Stock Markets';
@@ -63,6 +64,7 @@ export class StockMarketsComponent implements OnInit {
   }
   baseUrl = environment.baseUrl;
   updateUrl = environment.updateUrl;
+
   
   
   
@@ -109,42 +111,6 @@ export class StockMarketsComponent implements OnInit {
   // }
 
 
-  updateSelected() {
-    var selectedRow = this.gridApi.getSelectedRows();
-    
-	
-	 var gridApi1 = this.gridApi;
-	 var updateUrl1 = this.updateUrl;
-	 var that = this;
-	 selectedRow.forEach(function (value) {
-		var gridApi2 = gridApi1;
-		 var updateUrl2 = updateUrl1;
-		 
-		   console.log(value);
-		   
-		   if (value.name != "test" ){
-			   
-			   alert("cannot update row from group" + value.name);
-		   } else if(value.name="test"){
-			   var id='';
-			 return that.http.put(updateUrl2,selectedRow).subscribe(data => {
-    id = data.id;
-});
-			   
-			 
-		   }
-		   
-	   });
-	
-	
-	
-
-  // return this.http.put<any>(this.updateUrl,selectedRow).subscribe(data => {
-    // id = data.id;
-// });
-
-
-  }//end update selected
 
 
 
@@ -273,15 +239,82 @@ refresh(){
 	
 }
 
- addRow() {
-    var newItem = this.createNewRowData();
-    var res = this.gridApi.updateRowData({ add: [newItem] });
-   // printResult(res);
+//  addRow() {
+//     var newItem = this.createNewRowData();
+//    var sotos =  this.gridApi.updateRowData({ add: [newItem] });
+//    var that = this;
+// 	console.log(newItem);
+// 	var id='';
+// 	 that.http.post<any>("http://localhost/websites/grid_api/objects/addStock.php",newItem).subscribe(data => {
+//      id = data.id;
+	
+//  });
+
+
+   
+  //}
+
+
+  addRow(name) {
+    var newItem = this.createNewRowData(name);
+    this.gridApi.updateRowData({ add: [newItem] });
+       
+  // var sotos =  this.gridApi.updateRowData({ add: [newItem] });
+   var that = this;
+	console.log(newItem);
+	var id='';
+	 that.http.post<any>("http://localhost/websites/grid_api/objects/addStock.php",newItem).subscribe(data => {
+     id = data.id;
+	
+ });
+
+
+   
   }
   
+  
+  updateSelected() {
+    var selectedRow = this.gridApi.getSelectedRows();
+    
+	
+	 var gridApi1 = this.gridApi;
+	 var updateUrl1 = this.updateUrl;
+	 var that = this;
+	 selectedRow.forEach(function (value) {
+		var gridApi2 = gridApi1;
+		 var updateUrl2 = updateUrl1;
+		 
+		   console.log(value);
+		   
+		   if (value.name != "test" ){
+			   
+			   alert("cannot update row from group" + value.name + "\n only test group rows can be updated");
+		   } else if(value.name="test"){
+			   var id='';
+			 return that.http.put<any>(updateUrl2,selectedRow).subscribe(data => {
+    this.id = data.id;
+});
+			   
+			 
+		   }
+		   
+	   });
+	
+	
+	
+
+  // return this.http.put<any>(this.updateUrl,selectedRow).subscribe(data => {
+    // id = data.id;
+// });
+
+
+  }//end update selected
+  
+  
   removeSelected(){
+	 var that = this;
 	   var selectedData = this.gridApi.getSelectedRows();
-	   console.log(selectedData[0].id);
+	 
 	  var gridApi1 = this.gridApi;
 	   selectedData.forEach(function (value) {
 		var gridApi2 = gridApi1;
@@ -289,42 +322,25 @@ refresh(){
 		   
 		   if (value.name != "test" ){
 			   
-			   alert("cannot delete row from group" + value.name);
+			   alert("cannot delete row from group" + value.name + "\n only test group rows can be deleted");
 		   } else if(value.name="test"){
 			   
 			   gridApi2.updateRowData({ remove: selectedData });
 			   
 			  console.log(value);
-		   }
-		   
-	   });
-		   
+			  var id='';
+		   }	   
 		
 	   
-	   
-	      
-  // 
-	  
-  }
+  });
+}//end remove selected
   
-  createNewRowData() {
+  createNewRowData(name) {
 	  var newDate = new Date();
 	  var day = newDate.getUTCDate();
 	  var month = newDate.getMonth();
 	  var year = newDate.getFullYear();
-  var newData = {
-    name: "test" ,
-	volume:0,
-    date: year + "-"+ month+1 +"-"+ day,
-	open:0 ,
-    high: 0,
-    low: 0,
-    close: 0,
-	adj_volume:0,
-	adj_high:0,
-	adj_low:0,
-	id:0
-  };
+  var newData = {"name":"test","date":year+"-"+month+"-"+day,"open":1,"high":1,"low":1,"close":1,"volume":2147483647,"adj_volume":1,"adj_high":1,"adj_low":1};
  
   return newData;
 }

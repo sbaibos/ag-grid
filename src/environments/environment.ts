@@ -7,7 +7,9 @@ export const environment = {
   baseUrl  : "http://localhost/websites/grid_api/objects/readStock.php",
  // authUrl : "http://localhost/websites/angularGrid/"
   redirectUri : "http://localhost:4200",
-  updateUrl :"http://localhost/websites/grid_api/objects/updateStock.php"
+  updateUrl :"http://localhost/websites/grid_api/objects/updateStock.php",
+  postUrl :"http://localhost/websites/grid_api/objects/addStock.php",
+  deleteUrl :"http://localhost/websites/grid_api/objects/deleteStock.php"
 };
 
 /*
