@@ -19,26 +19,26 @@ export class StockMarketsComponent implements OnInit {
   public rowSelection;
   private autoGroupColumnDef;
   private transactionInterval;
-   private postUrl = environment.postUrl;
+  public test;
 
   @ViewChild('agGrid') agGrid: AgGridAngular;
   title = 'Stock Markets';
 
-  
+
 
   columnDefs = [
     { headerName: 'Name', field: 'name', sortable: true, filter: true, checkboxSelection: true, rowGroup: true, hide: true, chartDataType: "category" },
-	{ headerName: 'Volume', field: 'volume', sortable: true, filter: true, editable: true, chartDataType: "series",valueFormatter: CurrencyCellRenderer, aggFunc: "sum", valueParser: "Number(newValue)", cellRenderer: "agAnimateShowChangeCellRenderer"},
-    { headerName: 'Date', field: 'date', sortable: true, filter: true, editable: true, chartDataType: "category",valueParser: "String(newValue)"},
-    { headerName: 'Open', field: 'open', sortable: true, filter: true, editable: true, chartDataType: "series", cellRenderer: "agAnimateShowChangeCellRenderer", valueParser: "Number(newValue)"},
+    { headerName: 'Volume', field: 'volume', sortable: true, filter: true, editable: true, chartDataType: "series", valueFormatter: CurrencyCellRenderer, aggFunc: "sum", valueParser: "Number(newValue)", cellRenderer: "agAnimateShowChangeCellRenderer" },
+    { headerName: 'Date', field: 'date', sortable: true, filter: true, editable: true, chartDataType: "category", valueParser: "String(newValue)" },
+    { headerName: 'Open', field: 'open', sortable: true, filter: true, editable: true, chartDataType: "series", cellRenderer: "agAnimateShowChangeCellRenderer", valueParser: "Number(newValue)" },
     { headerName: 'High', field: 'high', sortable: true, filter: true, editable: true, chartDataType: "series", valueParser: "Number(newValue)", cellRenderer: "agAnimateShowChangeCellRenderer" },
     { headerName: 'Low', field: 'low', sortable: true, filter: true, editable: true, chartDataType: "series", valueParser: "Number(newValue)", cellRenderer: "agAnimateShowChangeCellRenderer" },
-    { headerName: 'Close', field: 'close', sortable: true, filter: true, editable: true, chartDataType: "series", valueParser: "Number(newValue)", cellRenderer: "agAnimateShowChangeCellRenderer"},
-    
-    { headerName: 'Adjusted Volume', field: 'adj_volume', sortable: true, filter: true, editable: true, chartDataType: "series",valueFormatter: CurrencyCellRenderer, aggFunc: "avg", valueParser: "Number(newValue)", cellRenderer: "agAnimateShowChangeCellRenderer" },
-    { headerName: 'Adjusted High', field: 'adj_high', sortable: true, filter: true, editable: true, chartDataType: "series",aggFunc: "avg", valueParser: "Number(newValue)", cellRenderer: "agAnimateShowChangeCellRenderer" },
-    { headerName: 'Adjusted low', field: 'adj_low', sortable: true, filter: true, editable: true, chartDataType: "series",aggFunc: "avg", valueParser: "Number(newValue)", cellRenderer: "agAnimateShowChangeCellRenderer" },
-	{ headerName: 'Id', field: 'id', sortable: true, filter: true, editable: true, valueParser: "Number(newValue)",hide: true}
+    { headerName: 'Close', field: 'close', sortable: true, filter: true, editable: true, chartDataType: "series", valueParser: "Number(newValue)", cellRenderer: "agAnimateShowChangeCellRenderer" },
+
+    { headerName: 'Adjusted Volume', field: 'adj_volume', sortable: true, filter: true, editable: true, chartDataType: "series", valueFormatter: CurrencyCellRenderer, aggFunc: "avg", valueParser: "Number(newValue)", cellRenderer: "agAnimateShowChangeCellRenderer" },
+    { headerName: 'Adjusted High', field: 'adj_high', sortable: true, filter: true, editable: true, chartDataType: "series", aggFunc: "avg", valueParser: "Number(newValue)", cellRenderer: "agAnimateShowChangeCellRenderer" },
+    { headerName: 'Adjusted low', field: 'adj_low', sortable: true, filter: true, editable: true, chartDataType: "series", aggFunc: "avg", valueParser: "Number(newValue)", cellRenderer: "agAnimateShowChangeCellRenderer" },
+    { headerName: 'Id', field: 'id', sortable: true, filter: true, editable: true, valueParser: "Number(newValue)", hide: true }
 
 
   ];
@@ -50,40 +50,41 @@ export class StockMarketsComponent implements OnInit {
 
   constructor(private http: HttpClient) {
     this.rowSelection = "multiple";
-	
-	 this.autoGroupColumnDef = {
+
+    this.autoGroupColumnDef = {
       headerName: "Name",
       field: "",
       width: 200,
       cellRenderer: "agGroupCellRenderer",
-	  cellRendererParams: { checkbox: true }
-     
+      cellRendererParams: { checkbox: true }
+
     };
-	
-			
+
+
   }
+  postUrl = environment.postUrl;
   baseUrl = environment.baseUrl;
   updateUrl = environment.updateUrl;
+  deleteUrl = environment.deleteUrl;
 
-  
-  
-  
- 
-    // we set the value cache in the function createGrid below
-    // valueCache = true / false;
-    
-    
 
-  
-  
-  
+
+
+  // we set the value cache in the function createGrid below
+  // valueCache = true / false;
+
+
+
+
+
+
 
   ngOnInit() {
-   this.rowData = this.http.get(this.baseUrl);
-	// this.rowData = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
+    this.rowData = this.http.get(this.baseUrl);
+    // this.rowData = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
     //this.rowData = this.http.get(this.baseUrl);
     //this.rowData = this.http.get('https://api.myjson.com/bins/15psn9');
-  
+
     // this.rowData = this.http.get('https://api.myjson.com/bins/ly7d1');
 
 
@@ -120,8 +121,8 @@ export class StockMarketsComponent implements OnInit {
   }
 
 
-  
-  
+
+
 
   SetRandomData() {
 
@@ -141,219 +142,283 @@ export class StockMarketsComponent implements OnInit {
     }
 
   }
-  
-  
+
+
   // transactionUpdate() {
   // this.rowData2 = this.http.get('https://api.iextrading.com/1.0/tops/last');
-   // var itemsToUpdate = [];
-// var gridApi1 = this.gridApi;
+  // var itemsToUpdate = [];
+  // var gridApi1 = this.gridApi;
 
   // this.rowData2.forEach(function (value) {
 
-// var gridApi2 = gridApi1;
+  // var gridApi2 = gridApi1;
 
-    // //console.log(value);//array with all stockmarket values
+  // //console.log(value);//array with all stockmarket values
 
-    // for (var i in value) {
-    
-// var rowNode = gridApi2.getDisplayedRowAtIndex(i);
+  // for (var i in value) {
 
-// var data = rowNode.data;
-	  
-      // data.openg = value[i]["open"];
-	  
-      // itemsToUpdate.push(data);
-    
-    // }
-	
-	 
+  // var rowNode = gridApi2.getDisplayedRowAtIndex(i);
+
+  // var data = rowNode.data;
+
+  // data.openg = value[i]["open"];
+
+  // itemsToUpdate.push(data);
+
+  // }
+
+
 
   // }); //end foreach
 
-  
-// this.gridApi.updateRowData({ update: itemsToUpdate });
-// }//end function
-  
-  
-  
 
-  
-  
+  // this.gridApi.updateRowData({ update: itemsToUpdate });
+  // }//end function
+
+
+
+
+
+
 
 
 
 
   // setData() {
 
-   // this.rowData2 = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
-	
-	// var gridApi1 = this.gridApi;
-    // this.rowData2.forEach(function (value) {
+  // this.rowData2 = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
 
-	// var gridApi2 = gridApi1;
+  // var gridApi1 = this.gridApi;
+  // this.rowData2.forEach(function (value) {
 
-      // //console.log(value);//array with all stockmarket values
+  // var gridApi2 = gridApi1;
 
-      // for (var i in value) {
-		  
- // var rowNode = gridApi2.getDisplayedRowAtIndex(i);
-        
-// var newData  = {
-        // open: value[i]["open"],
-        // close: value[i]["close"]
-      // };
-	  
-	  // rowNode.setData(newData);
-      // }
+  // //console.log(value);//array with all stockmarket values
 
-    // }); //end foreach
-	 
-     
+  // for (var i in value) {
+
+  // var rowNode = gridApi2.getDisplayedRowAtIndex(i);
+
+  // var newData  = {
+  // open: value[i]["open"],
+  // close: value[i]["close"]
+  // };
+
+  // rowNode.setData(newData);
+  // }
+
+  // }); //end foreach
+
+
   // }//end set data
 
 
- // setData2() {
-  
-// for (var i = 0; i < 3; i++) {
-   // var array1 = [1,2,3,4];//array  1,2,3,4
-   // var array2 = [5,6,7,8];
-      // var rowNode = this.gridApi.getDisplayedRowAtIndex(i);
+  // setData2() {
 
-       
-    
-       // var openValues = array1[i];//array  values
-      // var closeValues = array2[i];
-	  // console.log(openValues);
-    // var newData = {
-        // open: openValues,
-      // high: closeValues
-    // };
-// rowNode.setData(newData);
-      // }//end for
-	  
-   // }//end set data 2
-
-refresh(){
-	//this.rowData = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
-	 this.rowData = this.http.get(this.baseUrl);
-	
-}
-
-//  addRow() {
-//     var newItem = this.createNewRowData();
-//    var sotos =  this.gridApi.updateRowData({ add: [newItem] });
-//    var that = this;
-// 	console.log(newItem);
-// 	var id='';
-// 	 that.http.post<any>("http://localhost/websites/grid_api/objects/addStock.php",newItem).subscribe(data => {
-//      id = data.id;
-	
-//  });
+  // for (var i = 0; i < 3; i++) {
+  // var array1 = [1,2,3,4];//array  1,2,3,4
+  // var array2 = [5,6,7,8];
+  // var rowNode = this.gridApi.getDisplayedRowAtIndex(i);
 
 
-   
+
+  // var openValues = array1[i];//array  values
+  // var closeValues = array2[i];
+  // console.log(openValues);
+  // var newData = {
+  // open: openValues,
+  // high: closeValues
+  // };
+  // rowNode.setData(newData);
+  // }//end for
+
+  // }//end set data 2
+
+  refresh() {
+    //this.rowData = this.http.get('http://localhost/websites/grid_api/objects/readStock.php');
+    this.rowData = this.http.get(this.baseUrl);
+
+  }
+
+  //  addRow() {
+  //     var newItem = this.createNewRowData();
+  //    var sotos =  this.gridApi.updateRowData({ add: [newItem] });
+  //    var that = this;
+  // 	console.log(newItem);
+  // 	var id='';
+  // 	 that.http.post<any>("http://localhost/websites/grid_api/objects/addStock.php",newItem).subscribe(data => {
+  //      id = data.id;
+
+  //  });
+
+
+
   //}
 
 
   addRow(name) {
     var newItem = this.createNewRowData(name);
     this.gridApi.updateRowData({ add: [newItem] });
-       
-  // var sotos =  this.gridApi.updateRowData({ add: [newItem] });
-   var that = this;
-	console.log(newItem);
-	var id='';
-	 that.http.post<any>("http://localhost/websites/grid_api/objects/addStock.php",newItem).subscribe(data => {
-     id = data.id;
-	
- });
+	var myJSON = JSON.stringify(newItem); 
+
+    // var sotos =  this.gridApi.updateRowData({ add: [newItem] });
+    var that = this;
+    console.log(newItem);
+	console.log(myJSON);
+    var id = '';
+	 var postUrl1 = this.postUrl;
+   return that.http.post(postUrl1, myJSON).subscribe(data => {
+     // id = data.id;
+	 console.log("success");
+
+    });
 
 
-   
+
   }
-  
-  
+
+
   updateSelected() {
     var selectedRow = this.gridApi.getSelectedRows();
-    
-	
-	 var gridApi1 = this.gridApi;
-	 var updateUrl1 = this.updateUrl;
-	 var that = this;
-	 selectedRow.forEach(function (value) {
-		var gridApi2 = gridApi1;
-		 var updateUrl2 = updateUrl1;
-		 
-		   console.log(value);
-		   
-		   if (value.name != "test" ){
-			   
-			   alert("cannot update row from group" + value.name + "\n only test group rows can be updated");
-		   } else if(value.name="test"){
-			   var id='';
-			 return that.http.put<any>(updateUrl2,selectedRow).subscribe(data => {
-    this.id = data.id;
-});
-			   
-			 
-		   }
-		   
-	   });
-	
-	
-	
 
-  // return this.http.put<any>(this.updateUrl,selectedRow).subscribe(data => {
+
+    var gridApi1 = this.gridApi;
+    var updateUrl1 = this.updateUrl;
+    var that = this;
+    selectedRow.forEach(function (value) {
+      var gridApi2 = gridApi1;
+      var updateUrl2 = updateUrl1;
+
+      console.log(value);
+
+      if (value.name != "test") {
+
+        alert("cannot update row from group" + value.name + "\n only test group rows can be updated");
+      } else if (value.name = "test") {
+        var id = '';
+        return that.http.put<any>(updateUrl2, selectedRow).subscribe(data => {
+          this.id = data.id;
+        });
+
+
+      }
+
+    });
+
+
+
+
+    // return this.http.put<any>(this.updateUrl,selectedRow).subscribe(data => {
     // id = data.id;
-// });
+    // });
 
 
   }//end update selected
-  
-  
-  removeSelected(){
-	 var that = this;
-	   var selectedData = this.gridApi.getSelectedRows();
-	 
-	  var gridApi1 = this.gridApi;
-	   selectedData.forEach(function (value) {
-		var gridApi2 = gridApi1;
-		   console.log(value.id);
-		   
-		   if (value.name != "test" ){
-			   
-			   alert("cannot delete row from group" + value.name + "\n only test group rows can be deleted");
-		   } else if(value.name="test"){
-			   
-			   gridApi2.updateRowData({ remove: selectedData });
-			   
-			  console.log(value);
-			  var id='';
-		   }	   
-		
-	   
-  });
-}//end remove selected
-  
+
+
+  //   removeSelected(){
+  // 	 var that = this;
+  // 	   var selectedData = this.gridApi.getSelectedRows();
+
+  // 	  var gridApi1 = this.gridApi;
+  // 	   selectedData.forEach(function (value) {
+  // 		var gridApi2 = gridApi1;
+  // 		   console.log(value.id);
+
+  // 		   if (value.name != "test" ){
+
+  // 			   alert("cannot delete row from group" + value.name + "\n only test group rows can be deleted");
+  // 		   } else if(value.name="test"){
+
+  // 			   gridApi2.updateRowData({ remove: selectedData });
+
+  // 			  console.log(value);
+  // 			  var id='';
+  // 		   }	   
+
+
+  //   });
+  // }//end remove selected
+
+
+
+  removeSelected() {
+    var that = this;
+    var selectedRow = this.gridApi.getSelectedRows();
+
+    var gridApi1 = this.gridApi;
+    var deleteUrl1 = this.deleteUrl;
+	var that = this;
+    selectedRow.forEach(function (value) {
+      var deleteUrl2 = deleteUrl1;
+      var gridApi2 = gridApi1;
+      console.log(value.id);
+
+      if (value.name != "test") {
+
+        alert("cannot delete row from group" + value.name + "\n only test group rows can be deleted");
+      } else if (value.name = "test") {
+
+        gridApi2.updateRowData({ remove: selectedRow });
+
+        
+        var id = '';
+       
+        return that.http.delete(deleteUrl2 +'?id='+ value.id).subscribe(data => {
+          console.log("success");
+
+
+
+        });
+
+      }
+
+    });
+
+  }//end remove selected
+
   createNewRowData(name) {
-	  var newDate = new Date();
-	  var day = newDate.getUTCDate();
-	  var month = newDate.getMonth();
-	  var year = newDate.getFullYear();
-  var newData = {"name":"test","date":year+"-"+month+"-"+day,"open":1,"high":1,"low":1,"close":1,"volume":2147483647,"adj_volume":1,"adj_high":1,"adj_low":1};
- 
-  return newData;
-}
+    var newDate = new Date();
+    var day = newDate.getUTCDate();
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+    var month = newDate.getMonth();
+    var year = newDate.getFullYear();
+    var newData = { "name": "test", "date": year + "-" + month + "-" + day, "open": 1, "high": 1, "low": 1, "close": 1, "volume": 2147483647, "adj_volume": 1, "adj_high": 1, "adj_low": 1 };
+
+    return newData;
+  }
 
 }//end class
 
-function CurrencyCellRenderer(params:any) {
+function CurrencyCellRenderer(params: any) {
 
-    var usdFormate = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: 2
-    });
-    return usdFormate.format(params.value);
+  var usdFormate = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2
+  });
+  return usdFormate.format(params.value);
 }
 

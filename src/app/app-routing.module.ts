@@ -13,8 +13,8 @@ const routes: Routes = [
 { path: 'stock-exchange', component: StockExchangeComponent, canActivate: [AuthGuard]},
  { path: 'stock-markets', component: StockMarketsComponent, canActivate: [AuthGuard] },
 // { path: 'stock-exchange-live', component: StockExchangeLiveComponent },
- //{ path: 'stock-exchange', component: StockExchangeComponent },
- //{ path: 'stock-markets', component: StockMarketsComponent },
+// { path: 'stock-exchange', component: StockExchangeComponent },
+// { path: 'stock-markets', component: StockMarketsComponent },
  { path: '**', redirectTo: '' }
 
 ];

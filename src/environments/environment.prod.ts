@@ -3,5 +3,6 @@ export const environment = {
   baseUrl  : "http://sbaibos.com/sotostheme/api/grid_api/objects/readStock.php",
   redirectUri : "http://sbaibos.com/sotostheme/projects/angularGrid/",
   updateUrl :"http://sbaibos.com/sotostheme/api/grid_api/objects/updateStock.php",
-  postUrl :"http://sbaibos.com/sotostheme/api/grid_api/objects/addStock.php"
+  postUrl :"http://sbaibos.com/sotostheme/api/grid_api/objects/addStock.php",
+  deleteUrl :"http://sbaibos.com/sotostheme/api/grid_api/objects/deleteStock.php"
 };
